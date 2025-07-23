@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Registrar Hotel</title>
+  <link rel="stylesheet" href="styles.css" />
+  <script>
+  function validarHotel() {
+    // Aquí puedes agregar validaciones personalizadas si quieres
+    return true;
+  }
+  </script>
+</head>
+<body>
+  <div class="container">
+    <h2>Registrar Hotel</h2>
+    <form action="insertar_hotel.php" method="POST" onsubmit="return validarHotel()">
+      <label for="nombre">Nombre:</label>
+      <input type="text" id="nombre" name="nombre" required>
+
+      <label for="ubicacion">Ubicación:</label>
+      <input type="text" id="ubicacion" name="ubicacion" required>
+
+      <label for="habitaciones">Habitaciones disponibles:</label>
+      <input type="number" id="habitaciones" name="habitaciones" min="1" required>
+
+      <label for="tarifa">Tarifa por noche:</label>
+      <input type="number" id="tarifa" name="tarifa" step="0.01" min="0" required>
+
+      <input type="submit" value="Registrar">
+    </form>
+  </div>
+</body>
+</html>
