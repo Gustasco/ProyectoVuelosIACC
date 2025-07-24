@@ -53,7 +53,7 @@ agencia/
 ### Paso 1: Descargar XAMPP
 
 1. Descargar XAMPP desde [https://www.apachefriends.org](https://www.apachefriends.org)
-2. Instalar XAMPP en tu sistema operativo
+2. Instalar XAMPP en cualquier ubicación (C:\, D:\, F:\, etc.)
 3. Ejecutar XAMPP Control Panel
 
 ### Paso 2: Clonar o Descargar el Proyecto
@@ -68,58 +68,39 @@ cd ProyectoVuelosIACC
 1. Descargar el proyecto desde GitHub
 2. Extraer en la carpeta `htdocs` de XAMPP
 
-### Paso 3: Configurar XAMPP
+### Paso 3: Instalación Automática (Recomendado)
 
-1. **Iniciar servicios en XAMPP Control Panel:**
-   - ✅ Apache (puerto 80)
-   - ✅ MySQL (puerto 3306)
-
-2. **Verificar que los servicios estén corriendo:**
-   - Apache: `http://localhost` debe mostrar la página de XAMPP
-   - MySQL: Accesible desde phpMyAdmin
-
-### Paso 4: Crear la Base de Datos
-
-#### Opción A: Usando phpMyAdmin (Recomendado)
-1. Abrir navegador y ir a `http://localhost/phpmyadmin`
-2. Hacer clic en "Nuevo" para crear una nueva base de datos
-3. Nombrar la base de datos: `agencia_viajes`
-4. Seleccionar la base de datos creada
-5. Ir a la pestaña "SQL"
-6. Copiar y pegar el contenido del archivo `database/agencia_viajes.sql`
-7. Hacer clic en "Continuar"
-
-#### Opción B: Desde línea de comandos
+#### Opción A: Instalador Inteligente (Windows)
 ```bash
-# Navegar a la carpeta de MySQL en XAMPP
-cd C:\xampp\mysql\bin
-
-# Conectar a MySQL
-mysql -u root -p
-
-# Crear y usar la base de datos
-CREATE DATABASE agencia_viajes;
-USE agencia_viajes;
-
-# Ejecutar el script SQL
-source ruta/al/proyecto/database/agencia_viajes.sql;
+# Ejecutar como administrador - Detecta XAMPP automáticamente
+install_auto.bat
 ```
 
-### Paso 5: Configurar la Conexión
+#### Opción B: Instalador Simple (Windows)
+```bash
+# Si ya modificaste la ruta de XAMPP
+install.bat
+```
 
-1. Abrir el archivo `conexion.php`
-2. Verificar que los datos de conexión sean correctos:
-   ```php
-   $servidor = "localhost";
-   $usuario = "root";
-   $contraseña = "";  // Por defecto XAMPP no tiene contraseña
-   $bd = "agencia_viajes";
-   ```
+### Paso 4: Instalación Manual (Si los scripts fallan)
 
-### Paso 6: Acceder al Sistema
+1. **Configurar XAMPP:**
+   - Iniciar Apache y MySQL en XAMPP Control Panel
+   - Verificar que ambos servicios estén en "Running" (verde)
+
+2. **Crear Base de Datos:**
+   - Abrir `http://localhost/phpmyadmin`
+   - Crear nueva base de datos: `agencia_viajes`
+   - Importar archivo: `database/agencia_viajes.sql`
+
+3. **Verificar Conexión:**
+   - Comprobar que `conexion.php` tenga las credenciales correctas
+   - Verificar que apunte al puerto correcto de MySQL
+
+### Paso 5: Acceder al Sistema
 
 1. Abrir navegador web
-2. Ir a `http://localhost/agencia` (o la ruta donde colocaste el proyecto)
+2. Ir a `http://localhost/agencia/`
 3. ¡El sistema estará listo para usar!
 
 ## 🎯 Uso del Sistema

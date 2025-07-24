@@ -14,8 +14,8 @@ echo.
 
 REM Verificar si XAMPP está instalado
 echo [1/5] Verificando instalación de XAMPP...
-if not exist "C:\xampp\mysql\bin\mysql.exe" (
-    echo ERROR: XAMPP no encontrado en C:\xampp\
+if not exist "F:\xampp\mysql\bin\mysql.exe" (
+    echo ERROR: XAMPP no encontrado en F:\xampp\
     echo Por favor, instala XAMPP primero desde: https://www.apachefriends.org
     pause
     exit /b 1
@@ -25,7 +25,36 @@ echo ✅ XAMPP encontrado
 REM Verificar servicios de XAMPP
 echo.
 echo [2/5] Verificando servicios de XAMPP...
+
+REM Verificar si hay conflictos de puerto
+netstat -ano | findstr :3306 | findstr LISTENING >nul 2>&1
+if %errorlevel% equ 0 (
+    echo.
+    echo ⚠️  ADVERTENCIA: Puerto 3306 en uso por otro proceso
+    echo    Esto puede causar problemas con MySQL en XAMPP
+    echo.
+    echo    Opciones:
+    echo    1. Ejecutar fix_mysql.bat como administrador
+    echo    2. Continuar manualmente
+    echo.
+    echo    ¿Deseas ejecutar fix_mysql.bat? (s/n)
+    set /p fix_choice="> "
+    if /i "%fix_choice%"=="s" (
+        echo Ejecutando solucionador...
+        call fix_mysql.bat
+        if %errorlevel% neq 0 (
+            echo Error en la corrección. Continúa manualmente.
+            pause
+        )
+    )
+)
+
 echo IMPORTANTE: Asegúrate de que Apache y MySQL estén ejecutándose en XAMPP Control Panel
+echo.
+echo Estado esperado en XAMPP:
+echo ✅ Apache: Running (verde)
+echo ✅ MySQL:  Running (verde)
+echo.
 echo Presiona cualquier tecla cuando los servicios estén activos...
 pause > nul
 
@@ -34,7 +63,7 @@ echo.
 echo [3/5] Creando base de datos...
 echo Ejecutando script SQL...
 
-C:\xampp\mysql\bin\mysql.exe -u root -p --execute="SOURCE %~dp0database\agencia_viajes.sql;"
+F:\xampp\mysql\bin\mysql.exe -u root -p --execute="SOURCE %~dp0database\agencia_viajes.sql;"
 
 if %errorlevel% neq 0 (
     echo.

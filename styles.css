@@ -465,3 +465,214 @@ nav {
   }
 }
 
+/* Estilos específicos para consulta_reservas.php */
+.results-section {
+  margin: 20px 0;
+}
+
+.hotel-result {
+  background: linear-gradient(135deg, #f8fbff, #e8f4f8);
+  border: 1px solid #e1ecf4;
+  border-radius: 8px;
+  padding: 20px;
+  margin: 15px 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease;
+}
+
+.hotel-result:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+.hotel-result h3 {
+  margin: 0 0 10px 0;
+  color: #005f73;
+}
+
+.reservation-count {
+  margin: 0;
+  color: #0a9396;
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.stats-section {
+  background: linear-gradient(135deg, #e8f4f8, #f0f8ff);
+  border-radius: 8px;
+  padding: 20px;
+  margin: 30px 0;
+  border: 1px solid #e1ecf4;
+}
+
+.stats-section h3 {
+  margin-top: 0;
+  color: #005f73;
+  text-align: center;
+}
+
+.stat-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid #e1ecf4;
+}
+
+.stat-item:last-child {
+  border-bottom: none;
+}
+
+.stat-label {
+  color: #666;
+  font-weight: 500;
+}
+
+.stat-value {
+  background: #0a9396;
+  color: white;
+  padding: 4px 12px;
+  border-radius: 15px;
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+/* Estilos específicos para mostrar_reservas.php */
+.table-container {
+  overflow-x: auto;
+  margin: 20px 0;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.codigo-reserva {
+  font-family: 'Courier New', monospace;
+  font-weight: bold;
+  color: #0a9396;
+}
+
+.tipo-reserva {
+  padding: 4px 12px;
+  border-radius: 15px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.tipo-vuelo {
+  background: #e3f2fd;
+  color: #1976d2;
+}
+
+.tipo-hotel {
+  background: #f3e5f5;
+  color: #7b1fa2;
+}
+
+.tipo-paquete {
+  background: #e8f5e8;
+  color: #388e3c;
+}
+
+.detalles-servicio {
+  font-size: 0.9rem;
+  line-height: 1.3;
+}
+
+.vuelo-info, .hotel-info {
+  margin: 2px 0;
+}
+
+.no-detalles {
+  color: #999;
+  font-style: italic;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.estado {
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.estado-pendiente {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.estado-confirmada {
+  background: #d4edda;
+  color: #155724;
+}
+
+.estado-pagada {
+  background: #d1ecf1;
+  color: #0c5460;
+}
+
+.estado-cancelada {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+.estado-completada {
+  background: #d1f2eb;
+  color: #0f5132;
+}
+
+.stats-summary {
+  background: linear-gradient(135deg, #f8fbff, #e8f4f8);
+  border-radius: 12px;
+  padding: 25px;
+  margin: 30px 0;
+  border: 1px solid #e1ecf4;
+}
+
+.stats-summary h3 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #005f73;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+}
+
+.stat-card {
+  background: white;
+  border-radius: 8px;
+  padding: 15px;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-2px);
+}
+
+.stat-icon {
+  font-size: 2rem;
+  margin-bottom: 8px;
+}
+
+.stat-number {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #0a9396;
+  margin-bottom: 5px;
+}
+
+.stat-label {
+  color: #666;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
