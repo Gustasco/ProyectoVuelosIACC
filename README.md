@@ -6,12 +6,14 @@ Sistema web completo para la gestión de una agencia de viajes desarrollado en P
 
 ## ✨ Características Principales
 
-- 🔍 **Búsqueda de Vuelos**: Sistema avanzado de búsqueda por origen, destino y fecha
+- 🔍 **Búsqueda Avanzada de Vuelos**: Sistema completo con filtros múltiples (precio, aerolínea, horarios)
 - ✈️ **Gestión de Vuelos**: Agregar, modificar y consultar vuelos disponibles
 - 🏨 **Gestión de Hoteles**: Administración completa de hoteles y habitaciones
-- 📋 **Sistema de Reservas**: Gestión integral de reservas de clientes
+- 📋 **Sistema de Reservas**: Gestión integral de reservas de clientes con estadísticas
 - 📱 **Diseño Responsivo**: Interfaz adaptada para dispositivos móviles
-- 🎨 **Interfaz Moderna**: Diseño atractivo con gradientes y animaciones
+- 🎨 **Interfaz Moderna**: Diseño atractivo con gradientes y animaciones CSS
+- 🔄 **Workflow GitHub**: Templates de colaboración y buenas prácticas implementadas
+- 🛡️ **Seguridad**: Consultas SQL preparadas y validación de datos
 
 ## 🛠️ Tecnologías Utilizadas
 
@@ -26,20 +28,31 @@ Sistema web completo para la gestión de una agencia de viajes desarrollado en P
 ```
 agencia/
 ├── README.md                   # Documentación del proyecto
+├── .github/                    # Templates de GitHub para colaboración
+│   ├── ISSUE_TEMPLATE/        # Templates para issues
+│   │   ├── bug_report.md      # Template para reportes de bugs
+│   │   ├── feature_request.md # Template para solicitudes de funcionalidades
+│   │   └── documentation.md   # Template para mejoras de documentación
+│   └── PULL_REQUEST_TEMPLATE/ # Templates para pull requests
+│       └── pull_request_template.md # Template para PRs con checklist
 ├── database/
 │   └── agencia_viajes.sql     # Script de creación de la base de datos
 ├── install_auto.bat           # Script de instalación automática (Windows)
 ├── conexion.php               # Configuración de conexión a la base de datos
 ├── index.html                 # Página principal con búsqueda integrada
+├── busqueda_avanzada.html     # Sistema de búsqueda avanzada de vuelos
+├── api_busqueda_vuelos.php    # API backend para búsqueda de vuelos
 ├── form_buscar.html          # Formulario de búsqueda de vuelos
 ├── form_vuelo.html           # Formulario para agregar vuelos
 ├── form_hotel.html           # Formulario para agregar hoteles
 ├── mostrar_vuelo.php         # Mostrar resultados de búsqueda de vuelos
-├── mostrar_reservas.php      # Mostrar todas las reservas
+├── mostrar_reservas.php      # Mostrar todas las reservas con estadísticas
 ├── consulta_reservas.php     # Consultar reservas específicas
 ├── insertar_vuelo.php        # Procesar inserción de vuelos
 ├── insertar_hotel.php        # Procesar inserción de hoteles
 ├── insertar_reservas.php     # Procesar inserción de reservas
+├── ISSUE_HOTEL_INTEGRATION.md # Issue para discusión de integración de hoteles
+├── ASSIGNMENT_RESUMEN.md      # Resumen del assignment de colaboración GitHub
 └── styles.css                # Estilos CSS del proyecto
 ```
 
@@ -110,7 +123,15 @@ El instalador automático:
 - **URL**: `http://localhost/agencia/index.html`
 - **Funciones**: Búsqueda rápida de vuelos, navegación a todas las secciones
 
-### Búsqueda de Vuelos
+### Búsqueda Avanzada de Vuelos ⭐ NUEVO
+- **URL**: `http://localhost/agencia/busqueda_avanzada.html`
+- **Funciones**: 
+  - Filtros múltiples (precio, aerolínea, horarios, opciones)
+  - Estadísticas de resultados en tiempo real
+  - Interfaz moderna con validación
+  - Integración con base de datos MySQL
+
+### Búsqueda de Vuelos (Básica)
 - **URL**: `http://localhost/agencia/form_buscar.html`
 - **Función**: Buscar vuelos por origen, destino y fecha
 
@@ -125,6 +146,7 @@ El instalador automático:
 ### Gestión de Reservas
 - **Consultar**: `http://localhost/agencia/consulta_reservas.php`
 - **Ver todas**: `http://localhost/agencia/mostrar_reservas.php`
+- **Funciones**: Dashboard con estadísticas y reportes visuales
 
 ## 🐛 Solución de Problemas
 
@@ -184,6 +206,50 @@ Este proyecto utiliza **GitHub Flow** para el trabajo colaborativo. Sigue estas 
 - Seguir las plantillas de Issue y PR
 - Etiquetar apropiadamente: `bug`, `enhancement`, `documentation`
 
+### 📋 **Templates de GitHub Configurados**
+
+El proyecto incluye templates profesionales para mejorar la colaboración:
+
+#### **Issue Templates** (`.github/ISSUE_TEMPLATE/`):
+- 🐛 **Bug Report** (`bug_report.md`) - Reportes estructurados con información técnica
+- ✨ **Feature Request** (`feature_request.md`) - Solicitudes con criterios de aceptación
+- 📚 **Documentation** (`documentation.md`) - Mejoras de documentación
+
+#### **Pull Request Template** (`.github/PULL_REQUEST_TEMPLATE/`):
+- 🔄 **PR Template** - Checklist completo de calidad, seguridad y testing
+- ✅ Validación de código, base de datos, frontend y seguridad
+- 👀 Guía para reviewers con criterios específicos
+
+### 🌿 **Workflow de Desarrollo**
+
+#### **Estructura de Ramas:**
+- `main` - Rama principal (producción)
+- `rama-gustavo` - Rama de desarrollo principal
+- `feature/*` - Ramas para nuevas funcionalidades
+- `fix/*` - Ramas para corrección de bugs
+- `docs/*` - Ramas para mejoras de documentación
+
+#### **Ejemplo de Workflow:**
+1. Crear rama desde `rama-gustavo`: `feature/busqueda-avanzada`
+2. Desarrollar funcionalidad con commits descriptivos
+3. Crear Pull Request usando template
+4. Review colaborativo con comentarios
+5. Merge tras aprobación
+
+### 🚀 **Funcionalidades Recientes**
+
+#### **v2.1 - Búsqueda Avanzada** ⭐
+- Sistema completo de filtros múltiples
+- API REST con consultas SQL optimizadas
+- Estadísticas en tiempo real
+- Interfaz responsive moderna
+
+#### **Próximas Funcionalidades** (ver `ISSUE_HOTEL_INTEGRATION.md`):
+- Sistema integrado de paquetes vuelo + hotel
+- Búsqueda avanzada de hoteles
+- Dashboard unificado de reservas
+- Sistema de calificaciones
+
 ### 🔧 **Configuración para Desarrollo**
 
 #### **Variables de Entorno:**
@@ -220,6 +286,21 @@ Para soporte técnico o consultas:
 
 - **v1.0** - Versión inicial con funcionalidades básicas
 - **v2.0** - Mejoras en la interfaz y sistema de búsqueda
+- **v2.1** - ⭐ **ACTUAL** - Búsqueda avanzada de vuelos y templates de GitHub colaborativo
+
+### Changelog v2.1:
+- ✅ Sistema de búsqueda avanzada de vuelos con filtros múltiples
+- ✅ API backend `api_busqueda_vuelos.php` con consultas SQL seguras
+- ✅ Templates GitHub para issues y pull requests
+- ✅ Workflow colaborativo establecido con buenas prácticas
+- ✅ Issue documentado para integración de sistema de hoteles
+- ✅ Interfaz moderna responsive con CSS Grid
+- ✅ Estadísticas de búsqueda en tiempo real
+
+### En Desarrollo (v2.2):
+- 🔄 Sistema integrado de reservas de hoteles
+- 🔄 Paquetes combinados vuelo + hotel
+- 🔄 Dashboard unificado de administración
 
 ---
 
