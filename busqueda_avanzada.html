@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Búsqueda Avanzada de Vuelos - Agencia de Viajes</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .search-advanced {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 40px 20px;
+            margin: 20px 0;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        .search-form {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .form-group label {
+            color: white;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+        
+        .form-group input,
+        .form-group select {
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            background: rgba(255,255,255,0.9);
+            transition: all 0.3s ease;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            background: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .search-btn {
+            grid-column: 1 / -1;
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+        
+        .search-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255,107,107,0.4);
+        }
+        
+        .filters-section {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 20px 0;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        
+        .filters-title {
+            color: #333;
+            font-size: 24px;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+        
+        .filter-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .checkbox-group input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            accent-color: #667eea;
+        }
+        
+        .price-range {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .price-range input {
+            flex: 1;
+            padding: 8px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+        }
+        
+        .results-container {
+            margin-top: 30px;
+        }
+        
+        .flight-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-left: 5px solid #667eea;
+            transition: transform 0.3s ease;
+        }
+        
+        .flight-card:hover {
+            transform: translateX(5px);
+        }
+        
+        .flight-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            align-items: center;
+        }
+        
+        .flight-detail {
+            text-align: center;
+        }
+        
+        .flight-detail .label {
+            font-size: 12px;
+            color: #666;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+        
+        .flight-detail .value {
+            font-size: 18px;
+            color: #333;
+            font-weight: 700;
+            margin-top: 5px;
+        }
+        
+        .price-highlight {
+            color: #ee5a24;
+            font-size: 24px;
+        }
+        
+        .airline-logo {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #667eea;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav class="navbar">
+            <div class="nav-brand">
+                <h1>✈️ Agencia de Viajes</h1>
+            </div>
+            <div class="nav-links">
+                <a href="index.html">Inicio</a>
+                <a href="form_vuelo.html">Reservar Vuelo</a>
+                <a href="form_hotel.html">Reservar Hotel</a>
+                <a href="mostrar_reservas.php">Ver Reservas</a>
+                <a href="busqueda_avanzada.html" class="active">Búsqueda Avanzada</a>
+            </div>
+        </nav>
+
+        <main class="main-content">
+            <div class="search-advanced">
+                <h2 style="color: white; text-align: center; margin-bottom: 30px; font-size: 28px;">
+                    🔍 Búsqueda Avanzada de Vuelos
+                </h2>
+                
+                <form class="search-form" id="advanced-search-form">
+                    <div class="form-group">
+                        <label for="origen">Ciudad de Origen</label>
+                        <input type="text" id="origen" name="origen" placeholder="Ej: Santiago" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="destino">Ciudad de Destino</label>
+                        <input type="text" id="destino" name="destino" placeholder="Ej: Madrid" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="fecha_ida">Fecha de Ida</label>
+                        <input type="date" id="fecha_ida" name="fecha_ida" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="fecha_vuelta">Fecha de Vuelta (Opcional)</label>
+                        <input type="date" id="fecha_vuelta" name="fecha_vuelta">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="pasajeros">Número de Pasajeros</label>
+                        <select id="pasajeros" name="pasajeros">
+                            <option value="1">1 Pasajero</option>
+                            <option value="2">2 Pasajeros</option>
+                            <option value="3">3 Pasajeros</option>
+                            <option value="4">4 Pasajeros</option>
+                            <option value="5+">5+ Pasajeros</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="clase">Clase de Servicio</label>
+                        <select id="clase" name="clase">
+                            <option value="economica">Económica</option>
+                            <option value="premium">Premium Economy</option>
+                            <option value="business">Business</option>
+                            <option value="primera">Primera Clase</option>
+                        </select>
+                    </div>
+                    
+                    <button type="submit" class="search-btn">
+                        🔍 Buscar Vuelos
+                    </button>
+                </form>
+            </div>
+
+            <div class="filters-section">
+                <h3 class="filters-title">Filtros Adicionales</h3>
+                
+                <div class="filter-group">
+                    <div>
+                        <label><strong>Rango de Precios</strong></label>
+                        <div class="price-range">
+                            <input type="number" placeholder="Mín" id="precio_min">
+                            <span>-</span>
+                            <input type="number" placeholder="Máx" id="precio_max">
+                            <span>USD</span>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label><strong>Aerolíneas Preferidas</strong></label>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="latam" value="LATAM">
+                            <label for="latam">LATAM</label>
+                        </div>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="sky" value="SKY">
+                            <label for="sky">SKY Airline</label>
+                        </div>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="jetsmart" value="JetSMART">
+                            <label for="jetsmart">JetSMART</label>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label><strong>Horarios Preferidos</strong></label>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="manana" value="06:00-12:00">
+                            <label for="manana">Mañana (6AM - 12PM)</label>
+                        </div>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="tarde" value="12:00-18:00">
+                            <label for="tarde">Tarde (12PM - 6PM)</label>
+                        </div>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="noche" value="18:00-00:00">
+                            <label for="noche">Noche (6PM - 12AM)</label>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label><strong>Opciones de Vuelo</strong></label>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="directo" value="directo">
+                            <label for="directo">Solo vuelos directos</label>
+                        </div>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="equipaje" value="equipaje">
+                            <label for="equipaje">Equipaje incluido</label>
+                        </div>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="cancelacion" value="cancelacion">
+                            <label for="cancelacion">Cancelación gratis</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <button type="button" class="search-btn" onclick="aplicarFiltros()">
+                    ⚙️ Aplicar Filtros
+                </button>
+            </div>
+
+            <div class="results-container" id="results-container">
+                <!-- Los resultados aparecerán aquí -->
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Datos de ejemplo para vuelos
+        const vuelosEjemplo = [
+            {
+                id: 1,
+                aerolinea: "LATAM",
+                origen: "Santiago",
+                destino: "Madrid",
+                fecha: "2024-02-15",
+                horaSalida: "10:30",
+                horaLlegada: "14:45",
+                duracion: "12h 15m",
+                precio: 850,
+                clase: "economica",
+                directo: true,
+                equipaje: true
+            },
+            {
+                id: 2,
+                aerolinea: "SKY",
+                origen: "Santiago",
+                destino: "Buenos Aires",
+                fecha: "2024-02-16",
+                horaSalida: "16:20",
+                horaLlegada: "18:30",
+                duracion: "2h 10m",
+                precio: 320,
+                clase: "economica",
+                directo: true,
+                equipaje: false
+            },
+            {
+                id: 3,
+                aerolinea: "JetSMART",
+                origen: "Santiago",
+                destino: "Lima",
+                fecha: "2024-02-17",
+                horaSalida: "08:15",
+                horaLlegada: "11:45",
+                duracion: "3h 30m",
+                precio: 180,
+                clase: "economica",
+                directo: false,
+                equipaje: true
+            }
+        ];
+
+        // Función para buscar vuelos
+        document.getElementById('advanced-search-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const searchParams = Object.fromEntries(formData);
+            
+            console.log('Parámetros de búsqueda:', searchParams);
+            
+            // Mostrar loading
+            mostrarLoading();
+            
+            // Realizar búsqueda real en la base de datos
+            buscarVuelosAPI(searchParams);
+            
+            // Scroll suave hacia los resultados
+            document.getElementById('results-container').scrollIntoView({
+                behavior: 'smooth'
+            });
+        });
+
+        // Función para mostrar loading
+        function mostrarLoading() {
+            const container = document.getElementById('results-container');
+            container.innerHTML = `
+                <div style="text-align: center; padding: 40px; color: #667eea;">
+                    <div style="display: inline-block; width: 50px; height: 50px; border: 3px solid #f3f3f3; border-top: 3px solid #667eea; border-radius: 50%; animation: spin 1s linear infinite;"></div>
+                    <h3 style="margin-top: 20px;">Buscando vuelos...</h3>
+                    <p>Por favor espera mientras consultamos las mejores opciones</p>
+                </div>
+                <style>
+                    @keyframes spin {
+                        0% { transform: rotate(0deg); }
+                        100% { transform: rotate(360deg); }
+                    }
+                </style>
+            `;
+        }
+
+        // Función para realizar búsqueda en la API
+        async function buscarVuelosAPI(params) {
+            try {
+                // Agregar filtros adicionales
+                const filtros = obtenerFiltrosActivos();
+                const parametrosCompletos = { ...params, ...filtros };
+                
+                // Construir URL de la API
+                const urlParams = new URLSearchParams(parametrosCompletos);
+                const response = await fetch(`api_busqueda_vuelos.php?${urlParams}`);
+                
+                if (!response.ok) {
+                    throw new Error(`Error HTTP: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    mostrarResultados(data.vuelos, data.estadisticas);
+                    mostrarEstadisticas(data.estadisticas);
+                } else {
+                    mostrarError(data.error || 'Error desconocido en la búsqueda');
+                }
+                
+            } catch (error) {
+                console.error('Error en la búsqueda:', error);
+                mostrarError('Error de conexión. Por favor intenta nuevamente.');
+            }
+        }
+
+        // Función para obtener filtros activos
+        function obtenerFiltrosActivos() {
+            const filtros = {};
+            
+            // Precio
+            const precioMin = document.getElementById('precio_min').value;
+            const precioMax = document.getElementById('precio_max').value;
+            if (precioMin) filtros.precio_min = precioMin;
+            if (precioMax) filtros.precio_max = precioMax;
+            
+            // Aerolíneas
+            const aerolineas = [];
+            if (document.getElementById('latam').checked) aerolineas.push('LATAM');
+            if (document.getElementById('sky').checked) aerolineas.push('SKY');
+            if (document.getElementById('jetsmart').checked) aerolineas.push('JetSMART');
+            if (aerolineas.length > 0) filtros.aerolineas = aerolineas.join(',');
+            
+            return filtros;
+        }
+
+        // Función para mostrar error
+        function mostrarError(mensaje) {
+            const container = document.getElementById('results-container');
+            container.innerHTML = `
+                <div style="text-align: center; padding: 40px; color: #e74c3c; background: #ffeaea; border-radius: 10px; border: 1px solid #e74c3c;">
+                    <h3>❌ Error en la búsqueda</h3>
+                    <p>${mensaje}</p>
+                    <button onclick="location.reload()" style="background: #e74c3c; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">
+                        Intentar nuevamente
+                    </button>
+                </div>
+            `;
+        }
+
+        // Función para mostrar estadísticas
+        function mostrarEstadisticas(stats) {
+            if (!stats) return;
+            
+            const estadisticasHTML = `
+                <div style="background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 20px; border-radius: 10px; margin-bottom: 20px;">
+                    <h4 style="margin-bottom: 15px;">📊 Estadísticas de Búsqueda</h4>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+                        <div style="text-align: center;">
+                            <div style="font-size: 24px; font-weight: bold;">${stats.total_resultados}</div>
+                            <div style="font-size: 14px; opacity: 0.9;">Vuelos encontrados</div>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="font-size: 24px; font-weight: bold;">$${stats.precio_minimo}</div>
+                            <div style="font-size: 14px; opacity: 0.9;">Precio mínimo</div>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="font-size: 24px; font-weight: bold;">$${stats.precio_promedio}</div>
+                            <div style="font-size: 14px; opacity: 0.9;">Precio promedio</div>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="font-size: 24px; font-weight: bold;">$${stats.precio_maximo}</div>
+                            <div style="font-size: 14px; opacity: 0.9;">Precio máximo</div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            const container = document.getElementById('results-container');
+            container.insertAdjacentHTML('afterbegin', estadisticasHTML);
+        }
+
+        // Función para mostrar resultados
+        function mostrarResultados(vuelos) {
+            const container = document.getElementById('results-container');
+            
+            if (vuelos.length === 0) {
+                container.innerHTML = `
+                    <div style="text-align: center; padding: 40px; color: #666;">
+                        <h3>No se encontraron vuelos</h3>
+                        <p>Intenta modificar tus criterios de búsqueda</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            container.innerHTML = `
+                <h3 style="color: #333; margin-bottom: 20px;">
+                    ✈️ Resultados de Búsqueda (${vuelos.length} vuelos encontrados)
+                </h3>
+                ${vuelos.map(vuelo => `
+                    <div class="flight-card">
+                        <div class="flight-info">
+                            <div class="flight-detail">
+                                <div class="airline-logo">${vuelo.aerolinea.charAt(0)}</div>
+                                <div class="label">Aerolínea</div>
+                                <div class="value">${vuelo.aerolinea}</div>
+                            </div>
+                            
+                            <div class="flight-detail">
+                                <div class="label">Ruta</div>
+                                <div class="value">${vuelo.origen} → ${vuelo.destino}</div>
+                            </div>
+                            
+                            <div class="flight-detail">
+                                <div class="label">Fecha</div>
+                                <div class="value">${vuelo.fecha}</div>
+                            </div>
+                            
+                            <div class="flight-detail">
+                                <div class="label">Horario</div>
+                                <div class="value">${vuelo.horaSalida} - ${vuelo.horaLlegada}</div>
+                            </div>
+                            
+                            <div class="flight-detail">
+                                <div class="label">Duración</div>
+                                <div class="value">${vuelo.duracion}</div>
+                            </div>
+                            
+                            <div class="flight-detail">
+                                <div class="label">Precio</div>
+                                <div class="value price-highlight">$${vuelo.precio} USD</div>
+                            </div>
+                            
+                            <div class="flight-detail">
+                                <button style="background: linear-gradient(45deg, #667eea, #764ba2); color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer; font-weight: 600;" onclick="seleccionarVuelo(${vuelo.id})">
+                                    Seleccionar
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid #eee;">
+                            <span style="background: ${vuelo.directo ? '#28a745' : '#ffc107'}; color: white; padding: 4px 8px; border-radius: 4px; font-size: 12px; margin-right: 10px;">
+                                ${vuelo.directo ? '✈️ Directo' : '🔄 Con escalas'}
+                            </span>
+                            ${vuelo.equipaje ? '<span style="background: #17a2b8; color: white; padding: 4px 8px; border-radius: 4px; font-size: 12px; margin-right: 10px;">🧳 Equipaje incluido</span>' : ''}
+                            <span style="background: #6f42c1; color: white; padding: 4px 8px; border-radius: 4px; font-size: 12px;">
+                                📊 ${vuelo.clase.charAt(0).toUpperCase() + vuelo.clase.slice(1)}
+                            </span>
+                        </div>
+                    </div>
+                `).join('')}
+            `;
+        }
+
+        // Función para aplicar filtros
+        function aplicarFiltros() {
+            console.log('Aplicando filtros...');
+            
+            // Obtener formulario principal
+            const form = document.getElementById('advanced-search-form');
+            const formData = new FormData(form);
+            const searchParams = Object.fromEntries(formData);
+            
+            // Si hay parámetros de búsqueda, volver a buscar con filtros
+            if (searchParams.origen && searchParams.destino) {
+                mostrarLoading();
+                buscarVuelosAPI(searchParams);
+            } else {
+                alert('Por favor realiza una búsqueda básica primero (origen y destino son requeridos)');
+            }
+        }
+
+        // Función para seleccionar vuelo
+        function seleccionarVuelo(id) {
+            console.log('Vuelo seleccionado:', id);
+            if (confirm('¿Deseas proceder con la reserva de este vuelo?')) {
+                // Redirigir a formulario de reserva con datos del vuelo
+                window.location.href = `form_vuelo.html?vuelo_id=${id}`;
+            }
+        }
+
+        // Establecer fecha mínima como hoy
+        document.addEventListener('DOMContentLoaded', function() {
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('fecha_ida').min = today;
+            document.getElementById('fecha_vuelta').min = today;
+        });
+
+        // Validar que fecha de vuelta sea posterior a fecha de ida
+        document.getElementById('fecha_ida').addEventListener('change', function() {
+            document.getElementById('fecha_vuelta').min = this.value;
+        });
+    </script>
+</body>
+</html>
