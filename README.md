@@ -158,6 +158,49 @@ El sistema utiliza las siguientes tablas principales:
 - **Responsive Design**: CSS Grid y Flexbox para adaptabilidad
 - **Security**: Uso de prepared statements para prevenir SQL injection
 
+## 👥 Colaboración y Desarrollo
+
+### 🤝 **Guía para Colaboradores**
+
+Este proyecto utiliza **GitHub Flow** para el trabajo colaborativo. Sigue estas prácticas:
+
+#### **🌳 Flujo de Trabajo con Ramas:**
+1. **main** - Código estable y funcional
+2. **feature/nombre-funcionalidad** - Nuevas características
+3. **fix/nombre-bug** - Corrección de errores
+4. **docs/nombre-doc** - Actualizaciones de documentación
+
+#### **📋 Proceso de Contribución:**
+1. Hacer fork del repositorio
+2. Crear rama para tu funcionalidad: `git checkout -b feature/busqueda-avanzada`
+3. Desarrollar y hacer commits descriptivos
+4. Crear Pull Request con descripción detallada
+5. Revisar y aprobar cambios
+6. Merge a la rama principal
+
+#### **💬 Comunicación:**
+- Usar **Issues** para reportar bugs y proponer funcionalidades
+- Comentar **Pull Requests** de forma constructiva
+- Seguir las plantillas de Issue y PR
+- Etiquetar apropiadamente: `bug`, `enhancement`, `documentation`
+
+### 🔧 **Configuración para Desarrollo**
+
+#### **Variables de Entorno:**
+```php
+// Para desarrollo local
+$host = 'localhost:3306';
+$usuario = 'root';
+$contrasena = '';
+$bd = 'agencia_viajes_dev'; // Base de datos de desarrollo
+```
+
+#### **Estándares de Código:**
+- **PHP**: PSR-12 coding standard
+- **JavaScript**: ES6+ features
+- **CSS**: BEM methodology para clases
+- **Commits**: Conventional Commits format
+
 ## 👥 Contribuidores
 
 - **Gustasco** - Desarrollador Principal
