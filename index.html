@@ -2,20 +2,97 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Agencia de Viajes</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agencia de Viajes - Sistema de Gestión</title>
   <link rel="stylesheet" href="styles.css" />
-
 </head>
 <body>
-  <div class="containter">
-    <h1>Gestión de Agencia de Viajes</h1>
-    <ul>
-      <li><a href="form_vuelo.html">Registrar Vuelo</a></li>
-      <li><a href="form_hotel.html">Registrar Hotel</a></li>
-      <li><a href="insertar_reservas.php">Generar 10 Reservas</a></li>
-      <li><a href="mostrar_reservas.php">Ver todas las Reservas</a></li>
-      <li><a href="consulta_reservas.php">Hoteles con más de 2 Reservas</a></li>
-    </ul>
+  <div class="container">
+    <header>
+      <h1>🌍 Agencia de Viajes</h1>
+      <p class="subtitle">Tu plataforma completa de gestión de viajes</p>
+    </header>
+
+    <nav>
+      <ul>
+        <li><a href="#buscar">🔍 Buscar Vuelos</a></li>
+        <li><a href="form_vuelo.html">✈️ Agregar Vuelo</a></li>
+        <li><a href="form_hotel.html">🏨 Agregar Hotel</a></li>
+        <li><a href="consulta_reservas.php">📋 Ver Reservas</a></li>
+        <li><a href="mostrar_reservas.php">📊 Todas las Reservas</a></li>
+      </ul>
+    </nav>
+
+    <!-- Sección de búsqueda integrada -->
+    <section id="buscar" class="search-section">
+      <h2>🔍 Buscar Vuelos</h2>
+      <p>Encuentra el vuelo perfecto para tu próximo destino</p>
+      <form action="mostrar_vuelo.php" method="GET" class="search-form">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="origen">🛫 Origen:</label>
+            <input type="text" id="origen" name="origen" placeholder="Madrid, Barcelona, Sevilla..." required>
+          </div>
+          <div class="form-group">
+            <label for="destino">🛬 Destino:</label>
+            <input type="text" id="destino" name="destino" placeholder="París, Roma, Londres..." required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="fecha">📅 Fecha de vuelo:</label>
+            <input type="date" id="fecha" name="fecha">
+          </div>
+          <div class="form-group">
+            <input type="submit" value="🔍 Buscar Vuelos" class="btn-search">
+          </div>
+        </div>
+      </form>
+    </section>
+
+    <!-- Enlaces rápidos -->
+    <section class="quick-actions">
+      <h3>⚡ Acciones Rápidas</h3>
+      <div class="action-cards">
+        <div class="card">
+          <div class="card-icon">✈️</div>
+          <h4>Gestión de Vuelos</h4>
+          <p>Agrega nuevos vuelos y gestiona horarios, precios y disponibilidad</p>
+          <a href="form_vuelo.html" class="btn">Agregar Vuelo</a>
+        </div>
+        <div class="card">
+          <div class="card-icon">🏨</div>
+          <h4>Gestión de Hoteles</h4>
+          <p>Registra hoteles, habitaciones y servicios disponibles</p>
+          <a href="form_hotel.html" class="btn">Agregar Hotel</a>
+        </div>
+        <div class="card">
+          <div class="card-icon">📋</div>
+          <h4>Reservas</h4>
+          <p>Consulta, gestiona y administra todas las reservas de clientes</p>
+          <a href="consulta_reservas.php" class="btn">Ver Reservas</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Estadísticas rápidas -->
+    <section class="stats-section">
+      <h3>📊 Vista General</h3>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-number">📈</div>
+          <div class="stat-label">Sistema en línea</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">✅</div>
+          <div class="stat-label">Gestión completa</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">🔒</div>
+          <div class="stat-label">Datos seguros</div>
+        </div>
+      </div>
+    </section>
   </div>
 </body>
 </html>

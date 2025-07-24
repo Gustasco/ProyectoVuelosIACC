@@ -2,7 +2,8 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <title>Registrar Hotel</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registrar Hotel - Agencia de Viajes</title>
   <link rel="stylesheet" href="styles.css" />
   <script>
   function validarHotel() {
@@ -13,7 +14,17 @@
 </head>
 <body>
   <div class="container">
-    <h2>Registrar Hotel</h2>
+    <nav>
+      <ul>
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="form_buscar.html">Buscar Vuelos</a></li>
+        <li><a href="form_vuelo.html">Agregar Vuelo</a></li>
+        <li><a href="consulta_reservas.php">Ver Reservas</a></li>
+        <li><a href="mostrar_reservas.php">Todas las Reservas</a></li>
+      </ul>
+    </nav>
+    
+    <h2>🏨 Registrar Hotel</h2>
     <form action="insertar_hotel.php" method="POST" onsubmit="return validarHotel()">
       <label for="nombre">Nombre:</label>
       <input type="text" id="nombre" name="nombre" required>

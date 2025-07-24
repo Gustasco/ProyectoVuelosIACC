@@ -8,12 +8,23 @@ $resultado = $conn->query("SELECT * FROM RESERVA");
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <title>Reservas Registradas</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reservas Registradas - Agencia de Viajes</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <div class="container">
-    <h2>Reservas registradas</h2>
+    <nav>
+      <ul>
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="form_buscar.html">Buscar Vuelos</a></li>
+        <li><a href="form_vuelo.html">Agregar Vuelo</a></li>
+        <li><a href="form_hotel.html">Agregar Hotel</a></li>
+        <li><a href="consulta_reservas.php">Ver Reservas</a></li>
+      </ul>
+    </nav>
+    
+    <h2>📋 Reservas registradas</h2>
     <?php if ($resultado->num_rows > 0): ?>
       <table>
         <thead>
