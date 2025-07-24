@@ -28,6 +28,7 @@ agencia/
 ├── README.md                   # Documentación del proyecto
 ├── database/
 │   └── agencia_viajes.sql     # Script de creación de la base de datos
+├── install_auto.bat           # Script de instalación automática (Windows)
 ├── conexion.php               # Configuración de conexión a la base de datos
 ├── index.html                 # Página principal con búsqueda integrada
 ├── form_buscar.html          # Formulario de búsqueda de vuelos
@@ -68,21 +69,22 @@ cd ProyectoVuelosIACC
 1. Descargar el proyecto desde GitHub
 2. Extraer en la carpeta `htdocs` de XAMPP
 
-### Paso 3: Instalación Automática (Recomendado)
+### Paso 3: Instalación Automática
 
-#### Opción A: Instalador Inteligente (Windows)
+#### Instalador Inteligente (Windows) - Recomendado
 ```bash
 # Ejecutar como administrador - Detecta XAMPP automáticamente
 install_auto.bat
 ```
 
-#### Opción B: Instalador Simple (Windows)
-```bash
-# Si ya modificaste la ruta de XAMPP
-install.bat
-```
+El instalador automático:
+- 🔍 Detecta XAMPP en múltiples ubicaciones
+- 🛠️ Resuelve conflictos de puerto automáticamente  
+- ✅ Verifica servicios y conexión
+- 🗄️ Crea la base de datos completa
+- 🚀 Abre el sistema automáticamente
 
-### Paso 4: Instalación Manual (Si los scripts fallan)
+### Paso 4: Instalación Manual (Solo si el script falla)
 
 1. **Configurar XAMPP:**
    - Iniciar Apache y MySQL en XAMPP Control Panel
@@ -95,7 +97,6 @@ install.bat
 
 3. **Verificar Conexión:**
    - Comprobar que `conexion.php` tenga las credenciales correctas
-   - Verificar que apunte al puerto correcto de MySQL
 
 ### Paso 5: Acceder al Sistema
 
