@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Promociones y Destinos - Agencia de Viajes</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Estilos específicos para el carousel dinámico basado en API */
+        .loading-carousel {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 400px;
+            font-size: 1.2em;
+            color: #666;
+        }
+        
+        .loading-spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #2c5aa0;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin-right: 15px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .error-message {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border: 1px solid #c3e6cb;
+        }
+        
+        /* Optimizaciones para el carousel dinámico */
+        .carousel-slide {
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+        
+        .carousel-slide.active {
+            opacity: 1;
+        }
+        
+        /* Indicadores de analytics */
+        .promocion-analytics {
+            position: absolute;
+            bottom: 10px;
+            right: 15px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.8em;
+        }
+        
+        /* Adaptaciones responsive para datos dinámicos */
+        @media (max-width: 768px) {
+            .promocion-analytics {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎯 Promociones Especiales</h1>
+            <p class="subtitle">Descubre ofertas únicas y destinos increíbles</p>
+        </header>
+
+        <nav>
+            <ul>
+                <li><a href="index.html">🏠 Inicio</a></li>
+                <li><a href="busqueda_avanzada.html">🔍 Búsqueda Avanzada</a></li>
+                <li><a href="#promociones" class="active">🎯 Promociones</a></li>
+                <li><a href="form_vuelo.html">✈️ Agregar Vuelo</a></li>
+                <li><a href="form_hotel.html">🏨 Agregar Hotel</a></li>
+            </ul>
+        </nav>
+
+        <!-- Estado de carga y mensajes -->
+        <div id="mensajes-sistema"></div>
+
+        <!-- Carousel Principal de Promociones -->
+        <section class="carousel-container" id="carousel-promociones">
+            <div class="loading-carousel">
+                <div class="loading-spinner"></div>
+                <span>Cargando promociones vigentes...</span>
+            </div>
+        </section>
+
+        <!-- Controles del Carousel -->
+        <div class="carousel-controls" id="carousel-controls" style="display: none;">
+            <button class="carousel-btn prev" onclick="cambiarSlide(-1)">‹</button>
+            <div class="carousel-indicators" id="carousel-indicators"></div>
+            <button class="carousel-btn next" onclick="cambiarSlide(1)">›</button>
+        </div>
+
+        <!-- Información de la API -->
+        <section class="api-info">
+            <h3>📊 Información del Sistema</h3>
+            <div id="api-status">
+                <p>🔄 Conectando con la API de promociones...</p>
+            </div>
+        </section>
+
+        <!-- Destinos Populares (sección estática mejorada) -->
+        <section class="destinations-section">
+            <h2>🌟 Destinos Populares</h2>
+            <p>Explora los lugares más solicitados por nuestros viajeros</p>
+            
+            <div class="filter-buttons">
+                <button class="filter-btn active" data-filter="all">🌍 Todos</button>
+                <button class="filter-btn" data-filter="playa">🏖️ Playas</button>
+                <button class="filter-btn" data-filter="montana">🏔️ Montañas</button>
+                <button class="filter-btn" data-filter="cultural">🏛️ Cultural</button>
+            </div>
+
+            <div class="destinations-grid" id="destinations-grid">
+                <!-- Los destinos se cargarán dinámicamente -->
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Variables globales para el carousel dinámico
+        let promocionesActivas = [];
+        let currentSlide = 0;
+        let autoplayInterval;
+        let apiEndpoint = 'promociones_api.php';
+
+        // Inicializar la aplicación
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🚀 Iniciando carousel de promociones dinámico...');
+            console.log('📋 Implementando criterios del issue @RudyC-90');
+            cargarPromociones();
+            configurarEventos();
+        });
+
+        /**
+         * Cargar promociones desde la API
+         * Implementa el criterio: "máximo 6 promociones"
+         */
+        async function cargarPromociones() {
+            try {
+                mostrarMensaje('info', '🔄 Cargando promociones vigentes desde la API...');
+                
+                const response = await fetch(`${apiEndpoint}?activas=1`);
+                const data = await response.json();
+
+                if (data.success) {
+                    promocionesActivas = data.data;
+                    console.log(`✅ Cargadas ${promocionesActivas.length} promociones`);
+                    
+                    if (promocionesActivas.length > 0) {
+                        crearCarousel();
+                        iniciarAutoplay();
+                        mostrarMensaje('success', `✅ ${promocionesActivas.length} promociones cargadas exitosamente`);
+                        actualizarApiStatus(data);
+                    } else {
+                        mostrarMensaje('warning', '⚠️ No hay promociones vigentes en este momento');
+                        mostrarCarouselVacio();
+                    }
+                } else {
+                    throw new Error(data.error || 'Error al cargar promociones');
+                }
+            } catch (error) {
+                console.error('❌ Error cargando promociones:', error);
+                mostrarMensaje('error', `❌ Error al cargar promociones: ${error.message}`);
+                mostrarCarouselError();
+            }
+        }
+
+        /**
+         * Crear el carousel HTML dinámicamente
+         * Implementa el criterio: "se debe mostrar cada promoción por 5 segundos"
+         */
+        function crearCarousel() {
+            const container = document.getElementById('carousel-promociones');
+            const controls = document.getElementById('carousel-controls');
+            
+            let carouselHTML = `
+                <div class="carousel-wrapper">
+                    <div class="carousel-track" id="carousel-track">
+            `;
+
+            promocionesActivas.forEach((promocion, index) => {
+                const activeClass = index === 0 ? 'active' : '';
+                carouselHTML += `
+                    <div class="carousel-slide ${activeClass}" data-promocion-id="${promocion.id}">
+                        <div class="slide-content">
+                            <div class="slide-image">
+                                <img src="${promocion.imagen_url}" alt="${promocion.titulo}" loading="lazy">
+                                <div class="promocion-analytics">
+                                    ${promocion.clicks_totales} clicks
+                                </div>
+                            </div>
+                            <div class="slide-info">
+                                <div class="discount-badge">-${promocion.descuento_porcentaje}% OFF</div>
+                                <h3>${promocion.titulo}</h3>
+                                <p class="slide-description">${promocion.descripcion}</p>
+                                <div class="price-info">
+                                    <span class="price-from">Desde €${promocion.precio_desde}</span>
+                                    <span class="destination">${promocion.destino_relacionado}</span>
+                                </div>
+                                <div class="slide-actions">
+                                    <button class="btn-details" onclick="verDetallesPromocion(${promocion.id})">
+                                        📋 Ver Condiciones
+                                    </button>
+                                    <button class="btn-book" onclick="reservarPromocion(${promocion.id})">
+                                        ✈️ Reservar Ahora
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            carouselHTML += `
+                    </div>
+                </div>
+            `;
+
+            container.innerHTML = carouselHTML;
+            
+            // Crear indicadores
+            crearIndicadores();
+            
+            // Mostrar controles
+            controls.style.display = 'flex';
+        }
+
+        /**
+         * Crear indicadores del carousel
+         */
+        function crearIndicadores() {
+            const indicatorsContainer = document.getElementById('carousel-indicators');
+            let indicatorsHTML = '';
+
+            promocionesActivas.forEach((_, index) => {
+                const activeClass = index === 0 ? 'active' : '';
+                indicatorsHTML += `
+                    <button class="indicator ${activeClass}" onclick="irASlide(${index})"></button>
+                `;
+            });
+
+            indicatorsContainer.innerHTML = indicatorsHTML;
+        }
+
+        /**
+         * Iniciar autoplay del carousel
+         * Implementa el criterio: "cambiar cada 5 segundos"
+         */
+        function iniciarAutoplay() {
+            if (autoplayInterval) clearInterval(autoplayInterval);
+            
+            autoplayInterval = setInterval(() => {
+                cambiarSlide(1);
+            }, 5000); // 5 segundos como especifica el issue
+            
+            console.log('⏰ Autoplay configurado para cambiar cada 5 segundos');
+        }
+
+        /**
+         * Cambiar slide del carousel
+         */
+        function cambiarSlide(direction) {
+            if (promocionesActivas.length === 0) return;
+
+            const slides = document.querySelectorAll('.carousel-slide');
+            const indicators = document.querySelectorAll('.indicator');
+
+            // Remover clase active del slide actual
+            slides[currentSlide].classList.remove('active');
+            indicators[currentSlide].classList.remove('active');
+
+            // Calcular nuevo slide
+            currentSlide += direction;
+            if (currentSlide >= promocionesActivas.length) currentSlide = 0;
+            if (currentSlide < 0) currentSlide = promocionesActivas.length - 1;
+
+            // Activar nuevo slide
+            slides[currentSlide].classList.add('active');
+            indicators[currentSlide].classList.add('active');
+        }
+
+        /**
+         * Ir a slide específico
+         */
+        function irASlide(index) {
+            if (promocionesActivas.length === 0) return;
+
+            const slides = document.querySelectorAll('.carousel-slide');
+            const indicators = document.querySelectorAll('.indicator');
+
+            slides[currentSlide].classList.remove('active');
+            indicators[currentSlide].classList.remove('active');
+
+            currentSlide = index;
+
+            slides[currentSlide].classList.add('active');
+            indicators[currentSlide].classList.add('active');
+        }
+
+        /**
+         * Ver detalles de promoción
+         * Implementa el criterio: "El usuario puede hacer click en la imagen para acceder a la información"
+         */
+        async function verDetallesPromocion(promocionId) {
+            const promocion = promocionesActivas.find(p => p.id == promocionId);
+            if (!promocion) return;
+
+            // Registrar click para analytics
+            try {
+                await fetch(`${apiEndpoint}?click=1&id=${promocionId}`);
+                console.log(`📊 Click registrado para promoción ${promocionId}`);
+            } catch (error) {
+                console.warn('⚠️ No se pudo registrar el click:', error);
+            }
+
+            // Mostrar modal con detalles
+            alert(`🎯 ${promocion.titulo}\\n\\n` +
+                  `📋 Descripción: ${promocion.descripcion}\\n\\n` +
+                  `💰 Descuento: ${promocion.descuento_porcentaje}% OFF\\n` +
+                  `📅 Válido desde: ${promocion.fecha_inicio} hasta ${promocion.fecha_fin}\\n\\n` +
+                  `📜 Condiciones: ${promocion.condiciones}`);
+        }
+
+        /**
+         * Reservar promoción
+         */
+        function reservarPromocion(promocionId) {
+            const promocion = promocionesActivas.find(p => p.id == promocionId);
+            if (!promocion) return;
+
+            // Redirigir a formulario de reserva con datos de la promoción
+            const params = new URLSearchParams({
+                promocion_id: promocionId,
+                destino: promocion.destino_relacionado,
+                descuento: promocion.descuento_porcentaje,
+                categoria: promocion.categoria
+            });
+
+            window.location.href = `insertar_reservas.php?${params.toString()}`;
+        }
+
+        /**
+         * Mostrar mensaje al usuario
+         */
+        function mostrarMensaje(tipo, mensaje) {
+            const container = document.getElementById('mensajes-sistema');
+            const tipoClass = tipo === 'error' ? 'error-message' : 
+                            tipo === 'success' ? 'success-message' : 
+                            'success-message';
+            
+            container.innerHTML = `<div class="${tipoClass}">${mensaje}</div>`;
+            
+            // Auto-ocultar después de 5 segundos
+            setTimeout(() => {
+                container.innerHTML = '';
+            }, 5000);
+        }
+
+        /**
+         * Actualizar información de la API
+         */
+        function actualizarApiStatus(data) {
+            const statusContainer = document.getElementById('api-status');
+            statusContainer.innerHTML = `
+                <p>✅ API conectada exitosamente</p>
+                <p>📊 Promociones cargadas: ${data.total}</p>
+                <p>⏰ Última actualización: ${new Date(data.timestamp).toLocaleString()}</p>
+                <p>🎯 Autoplay: Cada 5 segundos</p>
+            `;
+        }
+
+        /**
+         * Mostrar carousel vacío
+         */
+        function mostrarCarouselVacio() {
+            const container = document.getElementById('carousel-promociones');
+            container.innerHTML = `
+                <div class="empty-carousel">
+                    <h3>😕 No hay promociones vigentes</h3>
+                    <p>Vuelve pronto para descubrir nuevas ofertas increíbles</p>
+                </div>
+            `;
+        }
+
+        /**
+         * Mostrar error en carousel
+         */
+        function mostrarCarouselError() {
+            const container = document.getElementById('carousel-promociones');
+            container.innerHTML = `
+                <div class="error-carousel">
+                    <h3>❌ Error al cargar promociones</h3>
+                    <p>Por favor, verifica la conexión y vuelve a intentar</p>
+                    <button onclick="cargarPromociones()" class="btn-retry">🔄 Reintentar</button>
+                </div>
+            `;
+        }
+
+        /**
+         * Configurar eventos adicionales
+         */
+        function configurarEventos() {
+            // Pausar autoplay en hover
+            const carousel = document.getElementById('carousel-promociones');
+            carousel.addEventListener('mouseenter', () => {
+                if (autoplayInterval) {
+                    clearInterval(autoplayInterval);
+                    console.log('⏸️ Autoplay pausado (hover)');
+                }
+            });
+
+            carousel.addEventListener('mouseleave', () => {
+                iniciarAutoplay();
+                console.log('▶️ Autoplay reanudado');
+            });
+
+            // Controles de teclado
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowLeft') cambiarSlide(-1);
+                if (e.key === 'ArrowRight') cambiarSlide(1);
+            });
+        }
+
+        // Destinos estáticos (se mantienen del carousel original)
+        const destinosPopulares = [
+            {
+                nombre: "Cancún",
+                pais: "México",
+                tipo: "playa",
+                imagen: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=400",
+                descripcion: "Playas paradisíacas del Caribe mexicano"
+            },
+            {
+                nombre: "Machu Picchu",
+                pais: "Perú", 
+                tipo: "montana",
+                imagen: "https://images.unsplash.com/photo-1587595431973-160d0d94add1?w=400",
+                descripcion: "La ciudadela inca más impresionante"
+            },
+            {
+                nombre: "Estambul",
+                pais: "Turquía",
+                tipo: "cultural",
+                imagen: "https://images.unsplash.com/photo-1541432901042-2d8bd64b4a9b?w=400",
+                descripcion: "Donde se encuentran Europa y Asia"
+            },
+            {
+                nombre: "Sydney",
+                pais: "Australia",
+                tipo: "playa",
+                imagen: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400",
+                descripcion: "Icónica ópera y playas increíbles"
+            },
+            {
+                nombre: "Thailand",
+                pais: "Tailandia",
+                tipo: "playa",
+                imagen: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400",
+                descripcion: "Templos dorados y playas exóticas"
+            },
+            {
+                nombre: "Isla de Pascua",
+                pais: "Chile",
+                tipo: "cultural",
+                imagen: "https://images.unsplash.com/photo-1580478354555-43b30fa8eeb1?w=400",
+                descripcion: "Los misteriosos moáis te esperan"
+            }
+        ];
+
+        // Cargar destinos populares
+        function cargarDestinos() {
+            const grid = document.getElementById('destinations-grid');
+            grid.innerHTML = destinosPopulares.map(destino => `
+                <div class="destination-card" data-tipo="${destino.tipo}">
+                    <div class="card-image">
+                        <img src="${destino.imagen}" alt="${destino.nombre}" loading="lazy">
+                    </div>
+                    <div class="card-content">
+                        <h3>${destino.nombre}</h3>
+                        <p class="country">📍 ${destino.pais}</p>
+                        <p class="description">${destino.descripcion}</p>
+                        <button class="btn-explore" onclick="explorarDestino('${destino.nombre}')">
+                            🧭 Explorar
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Cargar destinos al inicializar
+        setTimeout(cargarDestinos, 1000);
+
+        function explorarDestino(nombre) {
+            window.location.href = `mostrar_vuelo.php?destino=${encodeURIComponent(nombre)}`;
+        }
+
+        // Filtros de destinos
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('filter-btn')) {
+                const filtro = e.target.dataset.filter;
+                
+                // Actualizar botones activos
+                document.querySelectorAll('.filter-btn').forEach(btn => 
+                    btn.classList.remove('active'));
+                e.target.classList.add('active');
+                
+                // Filtrar destinos
+                document.querySelectorAll('.destination-card').forEach(card => {
+                    if (filtro === 'all' || card.dataset.tipo === filtro) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
