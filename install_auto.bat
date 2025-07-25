@@ -142,9 +142,71 @@ if %errorlevel% neq 0 (
 
 echo ✅ Base de datos 'agencia_viajes' creada exitosamente
 
+REM Instalar promociones automáticamente
+echo.
+echo [5/7] Instalando promociones dinámicas...
+echo Ejecutando script de promociones...
+
+if exist "instalar_promociones.php" (
+    REM Usar curl si está disponible
+    curl --version >nul 2>&1
+    if %errorlevel% equ 0 (
+        echo ✅ Usando curl para instalar promociones...
+        curl -s "http://localhost/agencia/instalar_promociones.php" >promociones_result.tmp 2>&1
+        if %errorlevel% equ 0 (
+            echo ✅ Promociones instaladas via HTTP
+            type promociones_result.tmp | findstr "exitosamente" >nul
+            if %errorlevel% equ 0 (
+                echo ✅ Confirmación: Promociones cargadas correctamente
+            ) else (
+                echo ⚠️  Advertencia: Respuesta inusual del servidor
+            )
+        ) else (
+            echo ⚠️  No se pudo conectar via HTTP, intentando PHP directo...
+            goto :direct_php
+        )
+    ) else (
+        echo ⚠️  curl no disponible, intentando PHP directo...
+        goto :direct_php
+    )
+) else (
+    echo ❌ ADVERTENCIA: Script instalar_promociones.php no encontrado
+    echo Las promociones dinámicas no se instalarán automáticamente
+    goto :skip_promociones
+)
+
+goto :promociones_done
+
+:direct_php
+REM Intentar ejecutar PHP directamente
+if exist "%XAMPP_PATH%\php\php.exe" (
+    echo ✅ Ejecutando PHP directamente...
+    "%XAMPP_PATH%\php\php.exe" instalar_promociones.php >promociones_result.tmp 2>&1
+    if %errorlevel% equ 0 (
+        echo ✅ Promociones instaladas via PHP directo
+        type promociones_result.tmp | findstr "exitosamente" >nul
+        if %errorlevel% equ 0 (
+            echo ✅ Confirmación: Promociones cargadas correctamente
+        )
+    ) else (
+        echo ❌ Error ejecutando PHP directo
+        echo Contenido del error:
+        type promociones_result.tmp
+    )
+) else (
+    echo ❌ PHP no encontrado en %XAMPP_PATH%\php\php.exe
+    echo Las promociones deberán instalarse manualmente
+)
+
+:promociones_done
+REM Limpiar archivo temporal
+del promociones_result.tmp >nul 2>&1
+
+:skip_promociones
+
 REM Verificar estructura de la base de datos
 echo.
-echo [5/6] Verificando estructura de la base de datos...
+echo [6/7] Verificando estructura de la base de datos...
 "%MYSQL_PATH%" -u root agencia_viajes -e "SHOW TABLES;" >tables.tmp 2>nul
 if %errorlevel% equ 0 (
     echo ✅ Tablas creadas correctamente:
@@ -156,7 +218,7 @@ if %errorlevel% equ 0 (
 
 REM Verificar configuración del proyecto
 echo.
-echo [6/6] Verificando configuración del proyecto...
+echo [7/7] Verificando configuración del proyecto...
 if not exist "conexion.php" (
     echo ❌ ADVERTENCIA: Archivo conexion.php no encontrado
     echo El sistema podría no funcionar correctamente
@@ -168,6 +230,35 @@ if not exist "index.html" (
     echo ❌ ADVERTENCIA: Archivo index.html no encontrado
 ) else (
     echo ✅ Página principal encontrada
+)
+
+if not exist "promociones_dinamicas.html" (
+    echo ❌ ADVERTENCIA: Archivo promociones_dinamicas.html no encontrado
+) else (
+    echo ✅ Página de promociones dinámicas encontrada
+)
+
+if not exist "promociones_api.php" (
+    echo ❌ ADVERTENCIA: API de promociones no encontrada
+) else (
+    echo ✅ API de promociones encontrada
+)
+
+REM Verificar que las promociones se hayan instalado
+echo Verificando promociones en la base de datos...
+"%MYSQL_PATH%" -u root agencia_viajes -e "SELECT COUNT(*) as total FROM promociones;" >promo_count.tmp 2>nul
+if %errorlevel% equ 0 (
+    for /f "skip=1" %%i in (promo_count.tmp) do (
+        if %%i gtr 0 (
+            echo ✅ Promociones encontradas en la base de datos: %%i registros
+        ) else (
+            echo ⚠️  No se encontraron promociones en la base de datos
+            echo Recomendación: Ejecutar manualmente instalar_promociones.php
+        )
+    )
+    del promo_count.tmp >nul 2>&1
+) else (
+    echo ⚠️  No se pudo verificar las promociones
 )
 
 REM Actualizar archivo de conexión con la ruta detectada
@@ -189,6 +280,8 @@ echo    📁 Proyecto: %~dp0
 echo.
 echo 🌐 ACCESOS DEL SISTEMA:
 echo    🏠 Principal: http://localhost/agencia/
+echo    🎯 Promociones: http://localhost/agencia/promociones_dinamicas.html
+echo    📊 API Promociones: http://localhost/agencia/promociones_api.php
 echo    📋 phpMyAdmin: http://localhost/phpmyadmin/
 echo    🔧 XAMPP Panel: %XAMPP_PATH%\xampp-control.exe
 echo.
@@ -197,7 +290,10 @@ echo    ✅ Búsqueda de vuelos
 echo    ✅ Gestión de hoteles
 echo    ✅ Sistema de reservas
 echo    ✅ Consultas especializadas
-echo    ✅ Interfaz responsiva
+echo    ✅ Interfaz responsiva Bootstrap 5.3.2
+echo    ✅ Carousel dinámico de promociones
+echo    ✅ API REST para promociones
+echo    ✅ Tema azul/blanco unificado
 echo.
 echo ========================================
 
@@ -206,11 +302,26 @@ del error.log >nul 2>&1
 
 REM Abrir el navegador automáticamente
 echo.
-echo ¿Deseas abrir el sistema en el navegador? (s/n)
-set /p respuesta="> "
-if /i "%respuesta%"=="s" (
+echo ¿Qué página deseas abrir en el navegador?
+echo 1) Página principal (index.html)
+echo 2) Promociones dinámicas (carousel)
+echo 3) Ambas páginas
+echo 4) No abrir navegador
+set /p browser_choice="Selecciona una opción (1-4): "
+
+if "%browser_choice%"=="1" (
     start http://localhost/agencia/
-    echo 🌐 Abriendo navegador...
+    echo 🌐 Abriendo página principal...
+) else if "%browser_choice%"=="2" (
+    start http://localhost/agencia/promociones_dinamicas.html
+    echo 🎯 Abriendo promociones dinámicas...
+) else if "%browser_choice%"=="3" (
+    start http://localhost/agencia/
+    timeout /t 2 /nobreak >nul
+    start http://localhost/agencia/promociones_dinamicas.html
+    echo 🌐 Abriendo ambas páginas...
+) else (
+    echo ℹ️  No se abrirá el navegador automáticamente
 )
 
 echo.
@@ -223,5 +334,15 @@ if /i "%respuesta2%"=="s" (
 
 echo.
 echo 🎉 ¡Instalación completada! El sistema está listo para usar.
+echo.
+echo 📝 NOTAS IMPORTANTES:
+echo    • Las promociones se actualizan automáticamente cada 5 segundos
+echo    • El carousel muestra máximo 6 promociones vigentes
+echo    • API REST disponible en /promociones_api.php
+echo    • Tema Bootstrap 5.3.2 con diseño responsivo
+echo.
+echo 💡 Para reinstalar promociones manualmente:
+echo    http://localhost/agencia/instalar_promociones.php
+echo.
 echo Presiona cualquier tecla para salir...
 pause > nul

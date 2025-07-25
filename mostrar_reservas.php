@@ -34,19 +34,131 @@ $resultado = $conn->query($sql);
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Reservas Registradas - Agencia de Viajes</title>
+  
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+  
+  <!-- Custom CSS -->
   <link rel="stylesheet" href="styles.css" />
+  
+  <style>
+    .page-header {
+      background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #3498db 100%);
+      color: white;
+      padding: 60px 0;
+    }
+    
+    .table-container {
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(30, 60, 114, 0.1);
+      overflow: hidden;
+      margin-top: -30px;
+      position: relative;
+      z-index: 10;
+    }
+  </style>
 </head>
 <body>
+  <!-- Navigation - Tema Azul y Blanco Unificado -->
+  <nav class="navbar navbar-expand-lg sticky-top" style="background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #3498db 100%); box-shadow: 0 4px 20px rgba(30, 60, 114, 0.3);">
+    <div class="container">
+      <a class="navbar-brand text-white fw-bold" href="index.html" style="font-size: 1.4rem;">
+        <i class="bi bi-airplane"></i> Agencia de Viajes
+      </a>
+      
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
+              style="border: 1px solid rgba(255,255,255,0.3);">
+        <span class="navbar-toggler-icon" style="background-image: url('data:image/svg+xml,%3csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 30 30\'%3e%3cpath stroke=\'rgba%28255, 255, 255, 0.8%29\' stroke-linecap=\'round\' stroke-miterlimit=\'10\' stroke-width=\'2\' d=\'M4 7h22M4 15h22M4 23h22\'/%3e%3c/svg%3e');"></span>
+      </button>
+      
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link text-white fw-semibold" href="index.html" 
+               style="transition: all 0.3s ease; border-radius: 8px; padding: 8px 16px;"
+               onmouseover="this.style.background='rgba(255,255,255,0.2)'; this.style.transform='translateY(-1px)'"
+               onmouseout="this.style.background='transparent'; this.style.transform='translateY(0)'">
+              <i class="bi bi-house-fill"></i> Inicio
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-white fw-semibold" href="form_buscar.html" 
+               style="transition: all 0.3s ease; border-radius: 8px; padding: 8px 16px;"
+               onmouseover="this.style.background='rgba(255,255,255,0.2)'; this.style.transform='translateY(-1px)'"
+               onmouseout="this.style.background='transparent'; this.style.transform='translateY(0)'">
+              <i class="bi bi-search"></i> Buscar Vuelos
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-white fw-semibold" href="promociones_dinamicas.html" 
+               style="transition: all 0.3s ease; border-radius: 8px; padding: 8px 16px;"
+               onmouseover="this.style.background='rgba(255,255,255,0.2)'; this.style.transform='translateY(-1px)'"
+               onmouseout="this.style.background='transparent'; this.style.transform='translateY(0)'">
+              <i class="bi bi-tags-fill"></i> Promociones
+            </a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle text-white fw-semibold" href="#" role="button" data-bs-toggle="dropdown"
+               style="transition: all 0.3s ease; border-radius: 8px; padding: 8px 16px;"
+               onmouseover="this.style.background='rgba(255,255,255,0.2)'; this.style.transform='translateY(-1px)'"
+               onmouseout="this.style.background='transparent'; this.style.transform='translateY(0)'">
+              <i class="bi bi-gear-fill"></i> Gestión
+            </a>
+            <ul class="dropdown-menu border-0 shadow-lg" style="background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%); border-radius: 12px; padding: 8px;">
+              <li><a class="dropdown-item fw-semibold" href="form_vuelo.html" 
+                     style="border-radius: 8px; padding: 10px 16px; color: #1e3c72; transition: all 0.3s ease;"
+                     onmouseover="this.style.background='linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%)'; this.style.transform='translateX(5px)'"
+                     onmouseout="this.style.background='transparent'; this.style.transform='translateX(0)'">
+                <i class="bi bi-airplane-fill text-primary"></i> Agregar Vuelo
+              </a></li>
+              <li><a class="dropdown-item fw-semibold" href="form_hotel.html" 
+                     style="border-radius: 8px; padding: 10px 16px; color: #1e3c72; transition: all 0.3s ease;"
+                     onmouseover="this.style.background='linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%)'; this.style.transform='translateX(5px)'"
+                     onmouseout="this.style.background='transparent'; this.style.transform='translateX(0)'">
+                <i class="bi bi-building text-success"></i> Agregar Hotel
+              </a></li>
+            </ul>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle text-white fw-semibold active" href="#" role="button" data-bs-toggle="dropdown"
+               style="transition: all 0.3s ease; border-radius: 8px; padding: 8px 16px; background: rgba(255,255,255,0.2);"
+               onmouseover="this.style.background='rgba(255,255,255,0.3)'; this.style.transform='translateY(-1px)'"
+               onmouseout="this.style.background='rgba(255,255,255,0.2)'; this.style.transform='translateY(0)'">
+              <i class="bi bi-calendar-check-fill"></i> Reservas
+            </a>
+            <ul class="dropdown-menu border-0 shadow-lg" style="background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%); border-radius: 12px; padding: 8px;">
+              <li><a class="dropdown-item fw-semibold" href="consulta_reservas.php" 
+                     style="border-radius: 8px; padding: 10px 16px; color: #1e3c72; transition: all 0.3s ease;"
+                     onmouseover="this.style.background='linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%)'; this.style.transform='translateX(5px)'"
+                     onmouseout="this.style.background='transparent'; this.style.transform='translateX(0)'">
+                <i class="bi bi-eye-fill text-info"></i> Ver Reservas
+              </a></li>
+              <li><a class="dropdown-item fw-semibold active" href="mostrar_reservas.php" 
+                     style="border-radius: 8px; padding: 10px 16px; color: #1e3c72; transition: all 0.3s ease; background: rgba(52, 152, 219, 0.1);"
+                     onmouseover="this.style.background='linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%)'; this.style.transform='translateX(5px)'"
+                     onmouseout="this.style.background='rgba(52, 152, 219, 0.1)'; this.style.transform='translateX(0)'">
+                <i class="bi bi-table text-warning"></i> Todas las Reservas
+              </a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Page Header -->
+  <section class="page-header">
+    <div class="container text-center">
+      <h1 class="display-5 mb-3">
+        <i class="bi bi-table"></i> Todas las Reservas
+      </h1>
+      <p class="lead">Gestión completa de reservas registradas en el sistema</p>
+    </div>
+  </section>
+
   <div class="container">
-    <nav>
-      <ul>
-        <li><a href="index.html">Inicio</a></li>
-        <li><a href="form_buscar.html">Buscar Vuelos</a></li>
-        <li><a href="form_vuelo.html">Agregar Vuelo</a></li>
-        <li><a href="form_hotel.html">Agregar Hotel</a></li>
-        <li><a href="consulta_reservas.php">Ver Reservas</a></li>
-      </ul>
-    </nav>
     
     <h2>📋 Todas las Reservas Registradas</h2>
     
@@ -199,16 +311,27 @@ $resultado = $conn->query($sql);
           <li>Intenta crear una nueva reserva desde el sistema</li>
         </ul>
         <div class="action-buttons">
-          <a href="form_vuelo.html" class="btn">✈️ Agregar Vuelo</a>
-          <a href="form_hotel.html" class="btn">🏨 Agregar Hotel</a>
+          <a href="form_vuelo.html" class="btn btn-primary">
+            <i class="bi bi-airplane-fill"></i> Agregar Vuelo
+          </a>
+          <a href="form_hotel.html" class="btn btn-success">
+            <i class="bi bi-building"></i> Agregar Hotel
+          </a>
         </div>
       </div>
     <?php endif; ?>
     
-    <div class="action-buttons">
-      <a href="consulta_reservas.php" class="btn">📊 Consultas Especiales</a>
-      <a href="index.html" class="btn btn-secondary">🏠 Volver al Inicio</a>
+    <div class="action-buttons mt-4">
+      <a href="consulta_reservas.php" class="btn btn-info">
+        <i class="bi bi-bar-chart-fill"></i> Consultas Especiales
+      </a>
+      <a href="index.html" class="btn btn-secondary">
+        <i class="bi bi-house-fill"></i> Volver al Inicio
+      </a>
     </div>
   </div>
+  
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

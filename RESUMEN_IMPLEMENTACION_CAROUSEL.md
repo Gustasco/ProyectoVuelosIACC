@@ -85,8 +85,7 @@
 2. **`instalar_promociones.php`** - Instalador automatizado
 3. **`promociones_api.php`** - API REST completa
 4. **`promociones_dinamicas.html`** - Carousel dinámico principal
-5. **`RESPUESTA_COLABORATIVA_CAROUSEL.md`** - Documentación colaborativa
-6. **`RESUMEN_IMPLEMENTACION_CAROUSEL.md`** - Este documento
+5. **`RESUMEN_IMPLEMENTACION_CAROUSEL.md`** - Este documento
 
 ### Archivos Modificados (1):
 1. **`index.html`** - Navegación actualizada a carousel dinámico

@@ -13,50 +13,87 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <!-- Navigation -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+  <!-- Navigation - Tema Azul y Blanco Unificado -->
+  <nav class="navbar navbar-expand-lg sticky-top" style="background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #3498db 100%); box-shadow: 0 4px 20px rgba(30, 60, 114, 0.3);">
     <div class="container">
-      <a class="navbar-brand" href="index.html">
+      <a class="navbar-brand text-white fw-bold" href="index.html" style="font-size: 1.4rem;">
         <i class="bi bi-airplane"></i> Agencia de Viajes
       </a>
       
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-        <span class="navbar-toggler-icon"></span>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
+              style="border: 1px solid rgba(255,255,255,0.3);">
+        <span class="navbar-toggler-icon" style="background-image: url('data:image/svg+xml,%3csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 30 30\'%3e%3cpath stroke=\'rgba%28255, 255, 255, 0.8%29\' stroke-linecap=\'round\' stroke-miterlimit=\'10\' stroke-width=\'2\' d=\'M4 7h22M4 15h22M4 23h22\'/%3e%3c/svg%3e');"></span>
       </button>
       
       <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav me-auto">
+        <ul class="navbar-nav ms-auto">
           <li class="nav-item">
-            <a class="nav-link" href="index.html">
-              <i class="bi bi-house"></i> Inicio
+            <a class="nav-link text-white fw-semibold" href="index.html" 
+               style="transition: all 0.3s ease; border-radius: 8px; padding: 8px 16px;"
+               onmouseover="this.style.background='rgba(255,255,255,0.2)'; this.style.transform='translateY(-1px)'"
+               onmouseout="this.style.background='transparent'; this.style.transform='translateY(0)'">
+              <i class="bi bi-house-fill"></i> Inicio
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="form_buscar.html">
+            <a class="nav-link text-white fw-semibold" href="form_buscar.html" 
+               style="transition: all 0.3s ease; border-radius: 8px; padding: 8px 16px;"
+               onmouseover="this.style.background='rgba(255,255,255,0.2)'; this.style.transform='translateY(-1px)'"
+               onmouseout="this.style.background='transparent'; this.style.transform='translateY(0)'">
               <i class="bi bi-search"></i> Buscar Vuelos
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="form_hotel.html">
-              <i class="bi bi-building"></i> Agregar Hotel
+            <a class="nav-link text-white fw-semibold" href="promociones_dinamicas.html" 
+               style="transition: all 0.3s ease; border-radius: 8px; padding: 8px 16px;"
+               onmouseover="this.style.background='rgba(255,255,255,0.2)'; this.style.transform='translateY(-1px)'"
+               onmouseout="this.style.background='transparent'; this.style.transform='translateY(0)'">
+              <i class="bi bi-tags-fill"></i> Promociones
             </a>
           </li>
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-              <i class="bi bi-calendar-check"></i> Reservas
+            <a class="nav-link dropdown-toggle text-white fw-semibold active" href="#" role="button" data-bs-toggle="dropdown"
+               style="transition: all 0.3s ease; border-radius: 8px; padding: 8px 16px; background: rgba(255,255,255,0.2);"
+               onmouseover="this.style.background='rgba(255,255,255,0.3)'; this.style.transform='translateY(-1px)'"
+               onmouseout="this.style.background='rgba(255,255,255,0.2)'; this.style.transform='translateY(0)'">
+              <i class="bi bi-gear-fill"></i> Gestión
             </a>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="consulta_reservas.php">Ver Reservas</a></li>
-              <li><a class="dropdown-item" href="mostrar_reservas.php">Todas las Reservas</a></li>
+            <ul class="dropdown-menu border-0 shadow-lg" style="background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%); border-radius: 12px; padding: 8px;">
+              <li><a class="dropdown-item fw-semibold" href="form_vuelo.html" 
+                     style="border-radius: 8px; padding: 10px 16px; color: #1e3c72; transition: all 0.3s ease; background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);"
+                     onmouseover="this.style.background='linear-gradient(135deg, #bbdefb 0%, #90caf9 100%)'; this.style.transform='translateX(5px)'"
+                     onmouseout="this.style.background='linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%)'; this.style.transform='translateX(0)'">
+                <i class="bi bi-airplane-fill text-primary"></i> Agregar Vuelo
+              </a></li>
+              <li><a class="dropdown-item fw-semibold" href="form_hotel.html" 
+                     style="border-radius: 8px; padding: 10px 16px; color: #1e3c72; transition: all 0.3s ease;"
+                     onmouseover="this.style.background='linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%)'; this.style.transform='translateX(5px)'"
+                     onmouseout="this.style.background='transparent'; this.style.transform='translateX(0)'">
+                <i class="bi bi-building text-success"></i> Agregar Hotel
+              </a></li>
             </ul>
           </li>
-        </ul>
-        
-        <ul class="navbar-nav">
-          <li class="nav-item">
-            <a class="nav-link" href="promociones_dinamicas.html">
-              <i class="bi bi-tags"></i> Promociones
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle text-white fw-semibold" href="#" role="button" data-bs-toggle="dropdown"
+               style="transition: all 0.3s ease; border-radius: 8px; padding: 8px 16px;"
+               onmouseover="this.style.background='rgba(255,255,255,0.2)'; this.style.transform='translateY(-1px)'"
+               onmouseout="this.style.background='transparent'; this.style.transform='translateY(0)'">
+              <i class="bi bi-calendar-check-fill"></i> Reservas
             </a>
+            <ul class="dropdown-menu border-0 shadow-lg" style="background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%); border-radius: 12px; padding: 8px;">
+              <li><a class="dropdown-item fw-semibold" href="consulta_reservas.php" 
+                     style="border-radius: 8px; padding: 10px 16px; color: #1e3c72; transition: all 0.3s ease;"
+                     onmouseover="this.style.background='linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%)'; this.style.transform='translateX(5px)'"
+                     onmouseout="this.style.background='transparent'; this.style.transform='translateX(0)'">
+                <i class="bi bi-eye-fill text-info"></i> Ver Reservas
+              </a></li>
+              <li><a class="dropdown-item fw-semibold" href="mostrar_reservas.php" 
+                     style="border-radius: 8px; padding: 10px 16px; color: #1e3c72; transition: all 0.3s ease;"
+                     onmouseover="this.style.background='linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%)'; this.style.transform='translateX(5px)'"
+                     onmouseout="this.style.background='transparent'; this.style.transform='translateX(0)'">
+                <i class="bi bi-table text-warning"></i> Todas las Reservas
+              </a></li>
+            </ul>
           </li>
         </ul>
       </div>
