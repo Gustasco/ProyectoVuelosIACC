@@ -804,17 +804,17 @@ nav {
 .navbar-brand {
   font-weight: bold;
   font-size: 1.4rem;
-  color: white !important;
+  color: rgb(17, 0, 255) !important;
 }
 
 .navbar-nav .nav-link {
   font-weight: 500;
   transition: all 0.3s ease;
-  color: white !important;
+  color: rgb(69, 132, 250) !important;
 }
 
 .navbar-nav .nav-link:hover {
-  color: white !important;
+  color: rgba(0, 17, 255, 0.541) !important;
   background: rgba(255,255,255,0.2) !important;
   border-radius: 8px;
   transform: translateY(-1px);

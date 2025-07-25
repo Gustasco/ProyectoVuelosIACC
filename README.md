@@ -1,5 +1,21 @@
 # 🌍 Sistema de Gestión de Agencia de Viajes
 
+## ⚡ Inicio Rápido
+
+**📌 Configuración esencial ANTES de usar el sistema:**
+
+1. **Instalar XAMPP** y iniciar Apache + MySQL
+2. **Configurar contraseña de MySQL** en `conexion.php`:
+   ```php
+   $contrasena = 'root';  // ⚠️ Cambiar de '' a 'root' si es necesario
+   ```
+3. **Ejecutar**: `install_auto.bat` (detecta XAMPP automáticamente)
+4. **Abrir**: `http://localhost/agencia/`
+
+> 💡 **Problema común**: Si ves errores JSON, revisar la contraseña de MySQL en `conexion.php`
+
+---
+
 ## 📋 Descripción del Proyecto
 
 Sistema web completo para la gestión de una agencia de viajes desarrollado en PHP, HTML, CSS y MySQL. Permite gestionar vuelos, hoteles y reservas de manera integral con una interfaz moderna y responsiva.
@@ -97,6 +113,22 @@ El instalador automático:
 
 3. **Verificar Conexión:**
    - Comprobar que `conexion.php` tenga las credenciales correctas
+   - **⚠️ IMPORTANTE**: Si MySQL requiere contraseña, actualizar en `conexion.php`:
+     ```php
+     $contrasena = 'root';  // Cambiar de '' a 'root' si es necesario
+     ```
+
+4. **Configuración de MySQL:**
+   - **Usuario por defecto**: `root`
+   - **Contraseña común**: `root` o vacía `''`
+   - **Puerto**: `3306`
+   - **Host**: `localhost`
+   
+   Si tienes problemas de conexión:
+   - Abrir phpMyAdmin: `http://localhost/phpmyadmin`
+   - Verificar que puedes acceder con usuario `root`
+   - Si requiere contraseña, usar `root` como contraseña
+   - Actualizar archivo `conexion.php` con las credenciales correctas
 
 ### Paso 5: Acceder al Sistema
 
@@ -127,6 +159,38 @@ El instalador automático:
 - **Ver todas**: `http://localhost/agencia/mostrar_reservas.php`
 
 ## 🐛 Solución de Problemas
+
+### ❌ Error de Conexión a MySQL
+**Error**: `Access denied for user 'root'@'localhost' (using password: NO)`
+
+**Solución**:
+1. **Verificar contraseña de MySQL**:
+   - Abrir `conexion.php`
+   - Cambiar la línea: `$contrasena = '';` por `$contrasena = 'root';`
+   
+2. **Probar conexión**:
+   - Ir a `http://localhost/phpmyadmin`
+   - Intentar acceder con usuario: `root` y contraseña: `root`
+   - Si funciona, la configuración es correcta
+
+3. **Configuraciones comunes de XAMPP**:
+   ```php
+   // Opción 1: Sin contraseña (XAMPP por defecto)
+   $contrasena = '';
+   
+   // Opción 2: Con contraseña 'root' (XAMPP configurado)
+   $contrasena = 'root';
+   ```
+
+### ❌ Error JSON en Promociones
+**Error**: `SyntaxError: Unexpected token '<', "<br />"`
+
+**Causa**: Errores PHP se muestran como HTML en lugar de JSON
+
+**Solución**:
+1. Verificar que MySQL esté conectando correctamente
+2. Revisar que la base de datos `agencia_viajes` exista
+3. Ejecutar `php instalar_promociones.php` para instalar datos de prueba
 
 ### Error de Conexión a la Base de Datos
 - Verificar que MySQL esté corriendo en XAMPP
