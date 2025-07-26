@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+<<<<<<< HEAD
+    <title>Buscar Vuelo</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h2>Buscar Vuelos</h2>
+    <form action="mostrar_vuelo.php" method="GET">
+        <label for="origen">Origen:</label>
+        <input type="text" id="origen" name="origen" required><br>
+
+        <label for="destino">Destino:</label>
+        <input type="text" id="destino" name="destino" required><br>
+
+        <label for="fecha">Fecha:</label>
+        <input type="date" id="fecha" name="fecha"><br>
+
+        <button type="submit">Buscar</button>
+    </form>
+=======
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buscar Vuelo - Agencia de Viajes</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <nav>
+            <ul>
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="form_vuelo.html">Agregar Vuelo</a></li>
+                <li><a href="form_hotel.html">Agregar Hotel</a></li>
+                <li><a href="consulta_reservas.php">Ver Reservas</a></li>
+                <li><a href="mostrar_reservas.php">Todas las Reservas</a></li>
+            </ul>
+        </nav>
+        
+        <h2>🔍 Buscar Vuelos</h2>
+        <form action="mostrar_vuelo.php" method="GET" class="search-form">
+            <label for="origen">Origen:</label>
+            <input type="text" id="origen" name="origen" placeholder="Ej: Madrid, Barcelona, Sevilla" required>
+
+            <label for="destino">Destino:</label>
+            <input type="text" id="destino" name="destino" placeholder="Ej: París, Roma, Londres" required>
+
+            <label for="fecha">Fecha de vuelo:</label>
+            <input type="date" id="fecha" name="fecha">
+
+            <input type="submit" value="🔍 Buscar Vuelos">
+        </form>
+    </div>
+>>>>>>> 9b8c656 (Mejoras completas en la interfaz y funcionalidad del sistema)
+</body>
+</html>
