@@ -2,20 +2,442 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Agencia de Viajes</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agencia de Viajes - Sistema de Gestión</title>
+  
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+  <!-- Custom CSS -->
   <link rel="stylesheet" href="styles.css" />
-
+  
+  <style>
+    /* Estilos personalizados para mejorar Bootstrap */
+    .navbar-brand {
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+    
+    .hero-section {
+      background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #3498db 100%);
+      color: white;
+      padding: 80px 0;
+      margin-bottom: 50px;
+    }
+    
+    .search-card {
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(30, 60, 114, 0.15);
+      padding: 30px;
+      margin-top: -50px;
+      position: relative;
+      z-index: 10;
+      border: 1px solid rgba(52, 152, 219, 0.1);
+    }
+    
+    .btn-custom {
+      background: linear-gradient(135deg, #1e3c72 0%, #3498db 100%);
+      border: none;
+      color: white;
+      transition: all 0.3s ease;
+    }
+    
+    .btn-custom:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(30, 60, 114, 0.4);
+      color: white;
+    }
+    
+    .feature-card {
+      transition: transform 0.3s ease;
+      border: 1px solid rgba(52, 152, 219, 0.1);
+      box-shadow: 0 5px 15px rgba(30, 60, 114, 0.08);
+      background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    }
+    
+    .feature-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(30, 60, 114, 0.15);
+      border-color: rgba(52, 152, 219, 0.3);
+    }
+    
+    .stats-section {
+      background: linear-gradient(135deg, #f8f9fa 0%, #e3f2fd 100%);
+      padding: 50px 0;
+    }
+    
+    .stat-number {
+      font-size: 2.5rem;
+      font-weight: bold;
+      color: #1e3c72;
+    }
+  </style>
 </head>
 <body>
-  <div class="containter">
-    <h1>Gestión de Agencia de Viajes</h1>
-    <ul>
-      <li><a href="form_vuelo.html">Registrar Vuelo</a></li>
-      <li><a href="form_hotel.html">Registrar Hotel</a></li>
-      <li><a href="insertar_reservas.php">Generar 10 Reservas</a></li>
-      <li><a href="mostrar_reservas.php">Ver todas las Reservas</a></li>
-      <li><a href="consulta_reservas.php">Hoteles con más de 2 Reservas</a></li>
-    </ul>
+  <!-- Navbar - Tema Azul y Blanco Unificado -->
+  <nav class="navbar navbar-expand-lg sticky-top" style="background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #3498db 100%); box-shadow: 0 4px 20px rgba(30, 60, 114, 0.3);">
+    <div class="container">
+      <a class="navbar-brand text-white fw-bold" href="index.html" style="font-size: 1.4rem;">
+        <i class="bi bi-airplane"></i> Agencia de Viajes
+      </a>
+      
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
+              style="border: 1px solid rgba(255,255,255,0.3);">
+        <span class="navbar-toggler-icon" style="background-image: url('data:image/svg+xml,%3csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 30 30\'%3e%3cpath stroke=\'rgba%28255, 255, 255, 0.8%29\' stroke-linecap=\'round\' stroke-miterlimit=\'10\' stroke-width=\'2\' d=\'M4 7h22M4 15h22M4 23h22\'/%3e%3c/svg%3e');"></span>
+      </button>
+      
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link text-white fw-semibold active" href="index.html" 
+               style="transition: all 0.3s ease; border-radius: 8px; padding: 8px 16px; background: rgba(255,255,255,0.2);"
+               onmouseover="this.style.background='rgba(255,255,255,0.3)'; this.style.transform='translateY(-1px)'"
+               onmouseout="this.style.background='rgba(255,255,255,0.2)'; this.style.transform='translateY(0)'">
+              <i class="bi bi-house-fill"></i> Inicio
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-white fw-semibold" href="index.html#buscar" 
+               style="transition: all 0.3s ease; border-radius: 8px; padding: 8px 16px;"
+               onmouseover="this.style.background='rgba(255,255,255,0.2)'; this.style.transform='translateY(-1px)'"
+               onmouseout="this.style.background='transparent'; this.style.transform='translateY(0)'">
+              <i class="bi bi-search"></i> Buscar Vuelos
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-white fw-semibold" href="promociones_dinamicas.html" 
+               style="transition: all 0.3s ease; border-radius: 8px; padding: 8px 16px;"
+               onmouseover="this.style.background='rgba(255,255,255,0.2)'; this.style.transform='translateY(-1px)'"
+               onmouseout="this.style.background='transparent'; this.style.transform='translateY(0)'">
+              <i class="bi bi-tags-fill"></i> Promociones
+            </a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle text-white fw-semibold" href="#" role="button" data-bs-toggle="dropdown"
+               style="transition: all 0.3s ease; border-radius: 8px; padding: 8px 16px;"
+               onmouseover="this.style.background='rgba(255,255,255,0.2)'; this.style.transform='translateY(-1px)'"
+               onmouseout="this.style.background='transparent'; this.style.transform='translateY(0)'">
+              <i class="bi bi-gear-fill"></i> Gestión
+            </a>
+            <ul class="dropdown-menu border-0 shadow-lg" style="background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%); border-radius: 12px; padding: 8px;">
+              <li><a class="dropdown-item fw-semibold" href="form_vuelo.html" 
+                     style="border-radius: 8px; padding: 10px 16px; color: #1e3c72; transition: all 0.3s ease;"
+                     onmouseover="this.style.background='linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%)'; this.style.transform='translateX(5px)'"
+                     onmouseout="this.style.background='transparent'; this.style.transform='translateX(0)'">
+                <i class="bi bi-airplane-fill text-primary"></i> Agregar Vuelo
+              </a></li>
+              <li><a class="dropdown-item fw-semibold" href="form_hotel.html" 
+                     style="border-radius: 8px; padding: 10px 16px; color: #1e3c72; transition: all 0.3s ease;"
+                     onmouseover="this.style.background='linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%)'; this.style.transform='translateX(5px)'"
+                     onmouseout="this.style.background='transparent'; this.style.transform='translateX(0)'">
+                <i class="bi bi-building text-success"></i> Agregar Hotel
+              </a></li>
+            </ul>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle text-white fw-semibold" href="#" role="button" data-bs-toggle="dropdown"
+               style="transition: all 0.3s ease; border-radius: 8px; padding: 8px 16px;"
+               onmouseover="this.style.background='rgba(255,255,255,0.2)'; this.style.transform='translateY(-1px)'"
+               onmouseout="this.style.background='transparent'; this.style.transform='translateY(0)'">
+              <i class="bi bi-calendar-check-fill"></i> Reservas
+            </a>
+            <ul class="dropdown-menu border-0 shadow-lg" style="background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%); border-radius: 12px; padding: 8px;">
+              <li><a class="dropdown-item fw-semibold" href="consulta_reservas.php" 
+                     style="border-radius: 8px; padding: 10px 16px; color: #1e3c72; transition: all 0.3s ease;"
+                     onmouseover="this.style.background='linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%)'; this.style.transform='translateX(5px)'"
+                     onmouseout="this.style.background='transparent'; this.style.transform='translateX(0)'">
+                <i class="bi bi-eye-fill text-info"></i> Ver Reservas
+              </a></li>
+              <li><a class="dropdown-item fw-semibold" href="mostrar_reservas.php" 
+                     style="border-radius: 8px; padding: 10px 16px; color: #1e3c72; transition: all 0.3s ease;"
+                     onmouseover="this.style.background='linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%)'; this.style.transform='translateX(5px)'"
+                     onmouseout="this.style.background='transparent'; this.style.transform='translateX(0)'">
+                <i class="bi bi-table text-warning"></i> Todas las Reservas
+              </a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="container text-center">
+      <h1 class="display-4 mb-3">🌍 Tu Aventura Comienza Aquí</h1>
+      <p class="lead mb-4">Descubre destinos increíbles con las mejores ofertas y un servicio excepcional</p>
+      <a href="#buscar" class="btn btn-light btn-lg">
+        <i class="bi bi-search"></i> Buscar Vuelos Ahora
+      </a>
+    </div>
+  </section>
+
+  <div class="container">
+    <!-- Sección de búsqueda mejorada -->
+    <div class="search-card" id="buscar">
+      <div class="row">
+        <div class="col-lg-8 mx-auto">
+          <h2 class="text-center mb-4">
+            <i class="bi bi-search text-primary"></i> Buscar Vuelos
+          </h2>
+          <p class="text-center text-muted mb-4">Encuentra el vuelo perfecto para tu próximo destino</p>
+          
+          <form action="mostrar_reservas.php" method="GET">
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label for="origen" class="form-label">
+                  <i class="bi bi-geo-alt"></i> Origen
+                </label>
+                <input type="text" class="form-control form-control-lg" id="origen" name="origen" 
+                       placeholder="Madrid, Barcelona, Sevilla..." required>
+              </div>
+              <div class="col-md-6">
+                <label for="destino" class="form-label">
+                  <i class="bi bi-geo-alt-fill"></i> Destino
+                </label>
+                <input type="text" class="form-control form-control-lg" id="destino" name="destino" 
+                       placeholder="París, Roma, Londres..." required>
+              </div>
+              <div class="col-md-6">
+                <label for="fecha" class="form-label">
+                  <i class="bi bi-calendar-date"></i> Fecha de vuelo
+                </label>
+                <input type="date" class="form-control form-control-lg" id="fecha" name="fecha">
+              </div>
+              <div class="col-md-6 d-flex align-items-end">
+                <button type="submit" class="btn btn-custom btn-lg w-100">
+                  <i class="bi bi-search"></i> Buscar Vuelos
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    </section>
+
+    <!-- Enlaces rápidos -->
+    <section class="quick-actions">
+      <h3>⚡ Acciones Rápidas</h3>
+      <div class="action-cards">
+        <div class="card">
+          <div class="card-icon">✈️</div>
+          <h4>Gestión de Vuelos</h4>
+          <p>Agrega nuevos vuelos y gestiona horarios, precios y disponibilidad</p>
+          <a href="form_vuelo.html" class="btn">Agregar Vuelo</a>
+        </div>
+        <div class="card">
+          <div class="card-icon">🏨</div>
+          <h4>Gestión de Hoteles</h4>
+          <p>Registra hoteles, habitaciones y servicios disponibles</p>
+          <a href="form_hotel.html" class="btn">Agregar Hotel</a>
+        </div>
+        <div class="card">
+          <div class="card-icon">📋</div>
+          <h4>Reservas</h4>
+          <p>Consulta, gestiona y administra todas las reservas de clientes</p>
+          <a href="consulta_reservas.php" class="btn">Ver Reservas</a>
+        </div>
+      </div>
+    </section>
+
+    </div>
+
+    <!-- Sección de características -->
+    <section class="py-5">
+      <div class="row">
+        <div class="col-lg-8 mx-auto text-center mb-5">
+          <h2 class="display-6 mb-3">¿Por qué elegirnos?</h2>
+          <p class="lead text-muted">Ofrecemos la mejor experiencia de viaje con servicios premium</p>
+        </div>
+      </div>
+      
+      <div class="row g-4">
+        <div class="col-md-6 col-lg-3">
+          <div class="card feature-card h-100 text-center p-4">
+            <div class="card-body">
+              <i class="bi bi-shield-check text-primary" style="font-size: 3rem;"></i>
+              <h5 class="card-title mt-3">Seguridad Garantizada</h5>
+              <p class="card-text">Viaja con confianza con nuestros protocolos de seguridad certificados</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-md-6 col-lg-3">
+          <div class="card feature-card h-100 text-center p-4">
+            <div class="card-body">
+              <i class="bi bi-clock text-success" style="font-size: 3rem;"></i>
+              <h5 class="card-title mt-3">Reserva Instantánea</h5>
+              <p class="card-text">Confirma tu viaje en segundos con nuestro sistema automatizado</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-md-6 col-lg-3">
+          <div class="card feature-card h-100 text-center p-4">
+            <div class="card-body">
+              <i class="bi bi-headset text-warning" style="font-size: 3rem;"></i>
+              <h5 class="card-title mt-3">Soporte 24/7</h5>
+              <p class="card-text">Atención personalizada las 24 horas, los 7 días de la semana</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-md-6 col-lg-3">
+          <div class="card feature-card h-100 text-center p-4">
+            <div class="card-body">
+              <i class="bi bi-gem text-danger" style="font-size: 3rem;"></i>
+              <h5 class="card-title mt-3">Precios Premium</h5>
+              <p class="card-text">Las mejores ofertas y promociones exclusivas para ti</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
   </div>
+
+  <!-- Sección de estadísticas -->
+  <section class="stats-section">
+    <div class="container">
+      <div class="row text-center">
+        <div class="col-lg-8 mx-auto mb-5">
+          <h2 class="display-6 mb-3">Números que nos respaldan</h2>
+          <p class="lead text-muted">La confianza de miles de viajeros en todo el mundo</p>
+        </div>
+      </div>
+      
+      <div class="row">
+        <div class="col-md-3 col-6 mb-4">
+          <div class="text-center">
+            <div class="stat-number">25K+</div>
+            <p class="text-muted mb-0">Clientes Satisfechos</p>
+          </div>
+        </div>
+        <div class="col-md-3 col-6 mb-4">
+          <div class="text-center">
+            <div class="stat-number">150+</div>
+            <p class="text-muted mb-0">Destinos Disponibles</p>
+          </div>
+        </div>
+        <div class="col-md-3 col-6 mb-4">
+          <div class="text-center">
+            <div class="stat-number">500+</div>
+            <p class="text-muted mb-0">Vuelos Semanales</p>
+          </div>
+        </div>
+        <div class="col-md-3 col-6 mb-4">
+          <div class="text-center">
+            <div class="stat-number">99%</div>
+            <p class="text-muted mb-0">Satisfacción Cliente</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Call to Action -->
+  <section class="py-5">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 mx-auto text-center">
+          <h2 class="display-6 mb-3">¿Listo para tu próxima aventura?</h2>
+          <p class="lead mb-4">Explora nuestras promociones especiales y destinos únicos</p>
+          <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+            <a href="promociones_dinamicas.html" class="btn btn-custom btn-lg me-md-2">
+              <i class="bi bi-tags"></i> Ver Promociones
+            </a>
+            <a href="busqueda_avanzada.php" class="btn btn-outline-primary btn-lg">
+              <i class="bi bi-funnel"></i> Búsqueda Avanzada
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-dark text-light py-5">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-4 mb-4">
+          <h5><i class="bi bi-airplane"></i> Agencia de Viajes</h5>
+          <p class="text-muted">Tu compañero de confianza para explorar el mundo con las mejores ofertas y servicios premium.</p>
+          <div class="d-flex gap-3">
+            <a href="#" class="text-light"><i class="bi bi-facebook"></i></a>
+            <a href="#" class="text-light"><i class="bi bi-twitter"></i></a>
+            <a href="#" class="text-light"><i class="bi bi-instagram"></i></a>
+            <a href="#" class="text-light"><i class="bi bi-linkedin"></i></a>
+          </div>
+        </div>
+        
+        <div class="col-lg-2 col-md-6 mb-4">
+          <h6>Servicios</h6>
+          <ul class="list-unstyled">
+            <li><a href="index.html" class="text-muted text-decoration-none">Vuelos</a></li>
+            <li><a href="form_hotel.html" class="text-muted text-decoration-none">Hoteles</a></li>
+            <li><a href="promociones_dinamicas.html" class="text-muted text-decoration-none">Promociones</a></li>
+            <li><a href="busqueda_avanzada.html" class="text-muted text-decoration-none">Búsqueda Avanzada</a></li>
+          </ul>
+        </div>
+        
+        <div class="col-lg-2 col-md-6 mb-4">
+          <h6>Gestión</h6>
+          <ul class="list-unstyled">
+            <li><a href="form_vuelo.html" class="text-muted text-decoration-none">Agregar Vuelo</a></li>
+            <li><a href="form_hotel.html" class="text-muted text-decoration-none">Agregar Hotel</a></li>
+            <li><a href="consulta_reservas.php" class="text-muted text-decoration-none">Ver Reservas</a></li>
+            <li><a href="mostrar_reservas.php" class="text-muted text-decoration-none">Todas las Reservas</a></li>
+          </ul>
+        </div>
+        
+        <div class="col-lg-4 mb-4">
+          <h6>Contacto</h6>
+          <p class="text-muted mb-2">
+            <i class="bi bi-geo-alt"></i> Madrid, España
+          </p>
+          <p class="text-muted mb-2">
+            <i class="bi bi-telephone"></i> +34 900 123 456
+          </p>
+          <p class="text-muted mb-2">
+            <i class="bi bi-envelope"></i> info@agenciaviajes.com
+          </p>
+        </div>
+      </div>
+      
+      <hr class="my-4">
+      <div class="row align-items-center">
+        <div class="col-md-6">
+          <p class="text-muted mb-0">&copy; 2025 Agencia de Viajes. Todos los derechos reservados.</p>
+        </div>
+        <div class="col-md-6 text-md-end">
+          <small class="text-muted">Desarrollado con ❤️ y Bootstrap</small>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  
+  <script>
+    // Smooth scrolling para enlaces internos
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+
+    // Actualizar fecha mínima en el input de fecha
+    document.getElementById('fecha').min = new Date().toISOString().split('T')[0];
+  </script>
 </body>
 </html>
