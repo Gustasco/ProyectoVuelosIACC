@@ -10,7 +10,7 @@
 // Configuración de la base de datos
 $host = 'localhost:3306';     // Servidor de base de datos (cambiar puerto si es necesario)
 $usuario = 'root';            // Usuario de MySQL (por defecto en XAMPP)
-$contrasena = 'root';         // Contraseña de MySQL
+$contrasena = '';         // Contraseña de MySQL
 $bd = 'agencia_viajes';       // Nombre de la base de datos
 
 // Crear conexión
